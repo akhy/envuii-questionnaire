@@ -1,0 +1,43 @@
+{% extends _layout %}
+
+{% block content %}
+
+	<div class="page-header">
+		<h3>Daftar Pertanyaan</h3>
+	</div>
+	
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Pertanyaan</th>
+				<th>Jenis</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for question in questions.get() %}
+			<tr>
+				<td>{{ question.id }}</td>
+				<td>
+					{{ anchor(question.url, question.description) }}
+					<ul>
+						{% for choice in question.choices %}
+							<li>{{ choice.text }}</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					{{ question.type() }}
+				</td>
+				<td>
+					<i class="icon-eye-open"></i>
+					<i class="icon-pencil"></i>
+					<i class="icon-trash"></i>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

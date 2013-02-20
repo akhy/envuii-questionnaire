@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<title>Public</title>
+	{{ css('lib/bootstrap/css/bootstrap.min.css') }}
+	{{ less('less/public.less') }}
+	{{ js('js/less.js') }}
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="span2">
+				{% if current %}
+				{{ img({'src': current.photo_url(), 'width': '100'}) }}
+				<h5>
+					{{ current.name | title }}
+				</h5>
+				<div>
+					{{ anchor('users/logout', 'Logout') }}
+				</div>
+				{% endif %}
+			</div>
+			<div class="span10">
+				<div class="page-header">
+					<h4>
+						Tracer Study - Environmental Engineering UII
+					</h4>
+				</div>
+
+				{% for name,val in alerts %}
+					{% if val != '' %}
+				    <div class="alert alert-{{ name }}">
+				    	{{ val }}
+				    </div>
+					{% endif %}
+				{% endfor %}
+
+				{% block content %}{% endblock %}
+
+				<div id="footer">
+					Copyright © 2013 Environment Engineering Department - Islamic University of Indonesia 
+					<br>
+					Tel. +62274 896440 ext. 3210 | Fax. +62274 895330 | Email : lingkungan@uii.ac.id
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- SCRIPTS -->
+	{{ js('lib/jquery/jquery-1.7.1.min.js') }}
+	{{ js('lib/bootstrap/js/bootstrap.min.js') }}
+</body>
+</html>

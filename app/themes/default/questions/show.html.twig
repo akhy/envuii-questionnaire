@@ -1,0 +1,27 @@
+{% extends _layout %}
+
+{% block content %}
+	{% set question = question.get() %}
+
+	<div class="page-header">
+	<small>Pertanyaan ke-{{ question.id }}</small>
+	<h4>{{ question.description }}</h4>
+	</div>
+
+	<ul class="choices">
+		{% for choice in question.choices() %}
+	    <li>
+		    <label class="radio">
+		    	<input name="answer" type="radio"></input> 
+		    	{{ choice.text }}
+		    </label>
+	    </li>
+		{% endfor %}
+	</ul>
+
+	<hr>
+
+	<a class="btn btn-primary" href="#">Jawab</a>
+	<a class="btn" href="#">Kembali ke pertanyaan sebelumnya</a>
+
+{% endblock %}

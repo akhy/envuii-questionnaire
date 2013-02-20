@@ -1,0 +1,37 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<form action="{{ base_url('users/login') }}" method="post" class="form">
+
+		<div class="row">
+
+			<div class="span5">
+				{{ img('img/unisys.jpg') }}
+				<blockquote>
+					Silakan login menggunakan akun UNISYS untuk memverifikasi bahwa anda adalah 
+					alumni Jurusan Teknik Lingkungan UII. Bila menemui kesulitan, hubungi
+					administrator.
+				</blockquote>
+			</div>
+
+			<div class="span5">
+				<label>Nomor Induk Mahasiswa</label>
+				<input type="text" name="user_id" placeholder="Misal: 08523108" />
+
+				<label>Password UNISYS</label>
+				<input type="password" name="password" placeholder="Password" />
+
+				<div class="clearfix"></div>
+				<input type="submit" value="Login with UNISYS" class="btn btn-primary">
+				
+				{{ anchor('users/register', 'Tidak bisa login?') }}
+			</div>
+
+		</div>
+		
+
+	</form>
+
+
+{% endblock %}

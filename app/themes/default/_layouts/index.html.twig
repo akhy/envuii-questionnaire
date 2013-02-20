@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	{{ css('lib/bootstrap/css/bootstrap.min.css') }}
+	{{ less('less/alumni.less') }}
+	{{ js('js/less.js') }}
+</head>
+<body>
+
+	<div class="container">
+
+		<!-- TOP -->
+		<div class="row">
+			<div class="span12">
+				<div id="header">
+					Environmental Engineering
+				</div>
+			</div>
+		</div>
+
+		<!-- MIDDLE -->
+		<div class="row">
+
+			<!-- SIDEBAR -->
+			<div class="span3">
+				<ul id="sidebar" class="nav nav-pills nav-stacked pad">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">Pertanyaan</a></li>
+					<li><a href="#">Statistik</a></li>
+				</ul>
+			</div>
+
+			<div class="span9">
+				<div id="content" class="">
+					{% block content %}{% endblock %}
+				</div>
+			</div>
+
+		</div>
+
+		<!-- BOTTOM -->
+		<div class="row">
+			<div class="span12">
+				<div id="footer">
+					Copyright © 2013 Environment Engineering Department - Islamic University of Indonesia 
+					<br/>
+					Tel. +62274 896440 ext. 3210 | Fax. +62274 895330 | Email : lingkungan@uii.ac.id
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- SCRIPTS -->
+	{{ js('lib/jquery/jquery-1.7.1.min.js') }}
+	{{ js('lib/bootstrap/js/bootstrap.min.js') }}
+</body>
+</html>

@@ -1,0 +1,304 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"photo",
+				"photo_path"
+			],
+			[
+				"linktype",
+				"linktype_id"
+			],
+			[
+				"tex",
+				"text-decoration"
+			],
+			[
+				"if",
+				"if	if"
+			],
+			[
+				"else",
+				"else	else"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 92.0,
+		"selected_items":
+		[
+			[
+				"enab",
+				"Package Control: Enable Package"
+			],
+			[
+				"enabl",
+				"Package Control: Enable Package"
+			],
+			[
+				"title",
+				"Convert Case: Title Case"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/media/Greed/Dropbox/Documents/SiTI/komunikasi-data",
+		"/media/Greed/Dropbox/Documents/SiTI/sistem-informasi",
+		"/home/akhyar/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/akhyar/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
+		"/home/akhyar/Webserver/domains/blog/source/_posts/2013-02-10-dari-wordpress-ke-octopress.markdown",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/core/MY_Admin.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/controllers/staffs.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/_layouts/index.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/admin/profile/picture.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/admin/profile/edit.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/sparks/Twiggy/0.8.5/config/twiggy.php",
+		"/home/akhyar/Webserver/domains/environment/public/alumni/app/libraries/curl.php",
+		"/home/akhyar/Repositories/unisys/README.md",
+		"/home/akhyar/Webserver/domains/environment/public/alumni/app/models/user.php",
+		"/home/akhyar/Webserver/domains/environment/public/alumni/app/libraries/unisys.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/public/lib/Kickstrap/theme.less",
+		"/home/akhyar/Webserver/domains/staff.informatics/public/lib/Kickstrap/kickstrap.less",
+		"/home/akhyar/Webserver/domains/staff.informatics/public/theme.less",
+		"/home/akhyar/Webserver/domains/staff.informatics/public/kickstrap.less",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/controllers/admin/links.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/config/routes.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/models/link.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/admin/links/list.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/admin/links/form.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/models/article.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/models/linktype.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/_parts/top_userbar.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/controllers/admin/profile.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/home.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/download.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/rss.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/_layouts/xml.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/models/staff.php",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/welcome.html.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/rss.xml.twig",
+		"/home/akhyar/Webserver/domains/staff.informatics/application/themes/default/_parts/navbar.html.twig",
+		"/home/akhyar/test.html"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/home/akhyar/Webserver/domains/staff.informatics/sparks/Twiggy/0.8.5/vendor/Twig/lib/Twig"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"caret",
+			"BASE",
+			"== ",
+			"cosmo",
+			"Kickstrap",
+			"Kickstrap/",
+			"'linktype_id' => array(\n		",
+			"inktype_id' => array(\n			'label' => 'Tipe link',\n		",
+			"portfolios",
+			"Article",
+			"article",
+			"Article",
+			"article",
+			"category_id",
+			"content",
+			"title",
+			"article",
+			"Artikel",
+			"article",
+			"articles",
+			"admin/articles",
+			"articles",
+			"/admin/articles",
+			"header",
+			"site_url",
+			"base_url",
+			"(.*)	(.*)",
+			"	(.*)",
+			"(.*)	(.*)",
+			"	",
+			"condition"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"$1 ->	<img src=\"http://www.gravatar.com/avatar/$2\"><br>",
+			"$1haha"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 35.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"twigg",
+				"sparks/Twiggy/0.8.5/config/twiggy.php"
+			],
+			[
+				"userbar",
+				"application/themes/default/_parts/top_userbar.html.twig"
+			],
+			[
+				"route",
+				"application/config/routes.php"
+			],
+			[
+				"wel",
+				"application/themes/default/welcome.html.twig"
+			],
+			[
+				"modestaf",
+				"application/models/staff.php"
+			],
+			[
+				"routes",
+				"application/config/routes.php"
+			],
+			[
+				"staffs",
+				"application/controllers/staffs.php"
+			],
+			[
+				"welc",
+				"application/themes/default/welcome.html.twig"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 231.0,
+	"status_bar_visible": true
+}

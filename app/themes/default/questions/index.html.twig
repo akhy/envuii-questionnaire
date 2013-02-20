@@ -1,0 +1,30 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<div class="alert">
+		Silakan klik pertanyaan untuk mengisi kuesioner ini.
+	</div>
+	
+	<table class="table table-striped">
+		<tbody>
+		{% for question in questions.get() %}
+		<tr>
+			<td>{{ question.id }}.</td>
+			<td>
+			</td>
+			<td>
+				{{ anchor(question.url, question.description) }}
+			</td>
+			<td>
+				<span class="label label-success">
+				&check;
+				</span>		
+				<button class="btn btn-mini">Ubah jawaban</button>
+			</td>		
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}
