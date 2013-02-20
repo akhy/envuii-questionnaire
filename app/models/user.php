@@ -11,10 +11,12 @@ class User extends DataMapper {
 	{
 		$CI =& get_instance();
 
-		return User::init()
+		$user = User::init()
 			->where('username', $CI->session->userdata('username'))
 			->get()
 			;
+
+		return $user->exists() ? $user : null;
 	}
 
 	public static function auth($username, $password)
@@ -68,5 +70,48 @@ class User extends DataMapper {
 	public function photo_url()
 	{
 		return 'photo/'.$this->username.'.jpg';
+	}
+
+	public function has_suggestion()
+	{
+		return $this->suggestion()->exists();
+	}
+
+	public function suggestion()
+	{
+		return Suggestion::init()->where('user_id', $this->id)->get();
+	}
+
+	public function has_competences()
+	{
+		$CI =& get_instance();
+
+		$tmp = $CI->db->query(
+			"SELECT * FROM user_competence 
+			 WHERE user_id = {$this->id}
+			 LIMIT 1
+			")->row(); 
+
+		return (is_object($tmp));
+	}
+
+	public function reset_competences()
+	{
+		$CI =& get_instance();
+		
+		return $CI->db->query(
+			"DELETE FROM user_competence 
+			 WHERE user_id = {$this->id}"
+			);
+	}
+
+	public function competences()
+	{
+		$CI =& get_instance();
+
+		return $CI->db->query(
+			"SELECT * FROM vu_competences 
+			 WHERE user_id = {$this->id}"
+			)->result();
 	}
 }

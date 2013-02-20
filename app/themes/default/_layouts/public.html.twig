@@ -1,10 +1,13 @@
 <!doctype html>
 <html>
 <head>
-	<title>Public</title>
+	<title>{{ title }}</title>
 	{{ css('lib/bootstrap/css/bootstrap.min.css') }}
 	{{ less('less/public.less') }}
 	{{ js('js/less.js') }}
+	{% for style in styles %}
+	    {{ css(style) }}
+	{% endfor %}
 </head>
 <body>
 
@@ -19,6 +22,7 @@
 				<div>
 					{{ anchor('users/logout', 'Logout') }}
 				</div>
+				{% include '_parts/sidebar.html.twig' %}
 				{% endif %}
 			</div>
 			<div class="span10">
@@ -28,12 +32,8 @@
 					</h4>
 				</div>
 
-				{% for name,val in alerts %}
-					{% if val != '' %}
-				    <div class="alert alert-{{ name }}">
-				    	{{ val }}
-				    </div>
-					{% endif %}
+				{% for type,alert in alerts %}
+					<div class="alert alert-{{ type }}">{{ alert }}</div>
 				{% endfor %}
 
 				{% block content %}{% endblock %}
@@ -50,5 +50,17 @@
 	<!-- SCRIPTS -->
 	{{ js('lib/jquery/jquery-1.7.1.min.js') }}
 	{{ js('lib/bootstrap/js/bootstrap.min.js') }}
+
+	{% for script in scripts %}
+	    {{ js(script) }}
+	{% endfor %}
+
+	<script type="text/javascript">
+		$(function(){
+			$('#{{ active }}').addClass('active');
+		});
+	</script>
+
+	{% block scripts %}{% endblock %}
 </body>
 </html>

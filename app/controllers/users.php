@@ -1,19 +1,16 @@
 <?php 
 
-class Users extends CI_Controller {
+class Users extends MY_Controller {
 
-	private function view($template)
+	protected function view($template)
 	{
-		return $this->twiggy
-			->layout('public')
-			->template($template)
-			->set('alerts', alerts())
-			// ->set('current', User::current())
-			;
+		return parent::view($template);
 	}
 
 	public function get_login()
 	{
+		$this->session->sess_destroy();
+		
 		$this->view('users/login')
 			->display();
 	}

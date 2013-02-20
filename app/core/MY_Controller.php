@@ -17,6 +17,12 @@ class MY_Controller extends CI_Controller {
 			->template($template)
 			->append('Environmental Engineering')
 			->set('current', User::current())
+			->set('alerts', Alert::all())
 			;
+	}
+
+	public function after()
+	{
+		echo 'Test';
 	}
 }
