@@ -2,6 +2,8 @@
 
 class User extends DataMapper {
 
+	static $current = false;
+
 	public static function init()
 	{
 		return new User;
@@ -11,10 +13,15 @@ class User extends DataMapper {
 	{
 		$CI =& get_instance();
 
+		if (User::$current !== false)
+			return User::$current;
+
 		$user = User::init()
 			->where('username', $CI->session->userdata('username'))
 			->get()
 			;
+
+		User::$current = $user;
 
 		return $user->exists() ? $user : null;
 	}
@@ -114,4 +121,127 @@ class User extends DataMapper {
 			 WHERE user_id = {$this->id}"
 			)->result();
 	}
+
+	public function has_bio()
+	{
+		return sizeof($this->get_bio()) > 0;
+	}
+
+	public function get_bio($nice = false)
+	{
+		$CI =& get_instance();
+
+		$user_id = User::current()->id;
+
+		$raw = $CI->db->query(
+			"SELECT `key`, `value`, `nicename` FROM user_bio WHERE user_id = $user_id"
+			)->result(); 
+
+		$index = $nice ? 'nicename' : 'key';
+		$result = array();
+		foreach ($raw as $record)
+			$result[$record->$index] = $record->value;
+
+		return $result;
+	}
+	public function set_bio($array)
+	{
+		$this->bio = $array;
+	}
+
+	public function save_bio($array)
+	{
+		$CI =& get_instance();
+
+		$this->set_bio($array);
+
+		if($this->invalid_bio())
+			return false;
+
+		foreach($this->bio_validation['sanitized'] as $key => $value)
+		{
+			$user_id = User::current()->id;
+
+			$check = $CI->db
+				->where('user_id', $user_id)
+				->where('key', $key)
+				->from('user_bio')
+				->get()->row();
+
+			if(is_object($check))
+			{
+				$CI->db
+					->where('user_id', $user_id)
+					->where('key', $key)
+					->update('user_bio', array(
+						'value'   => $value,
+						)
+					);
+				continue;
+			}
+
+			$CI->db->insert('user_bio', 
+				array(
+					'user_id' => $user_id,
+					'key'     => $key,
+					'nicename'=> User::nicename($key),
+					'value'   => $value,
+					)
+				);
+		}
+	}
+
+	public function invalid_bio()
+	{
+		$validation = $this->validate_bio();
+
+		return sizeof($validation['errors']) > 0; 
+	}
+
+	public function validate_bio()
+	{
+		$CI =& get_instance();
+		$CI->load->library('validation');
+
+		// Validate 
+		$val = new validation;
+		$val->addSource($this->bio);
+
+		$val->addRule('gender', 'string', true, 1, 20)
+			->addRule('email', 'email', true)
+			->addRule('year_entry', 'numeric', true, 1990, date('Y'))
+			->addRule('year_graduate', 'numeric', true, 1990, date('Y'))
+			->addRule('priority', 'numeric', true, 1, 3)
+			->addRule('current_address', 'string', true, 5, 500)
+			->addRule('contact_number', 'string', true, 5, 15)
+			->addRule('socmed_facebook', 'url', false)
+			->addRule('socmed_twitter', 'string', false, 4, 30)
+			;
+
+		$val->run();
+
+
+		return $this->bio_validation = array(
+			'errors' => $val->errors,
+			'sanitized' => $val->sanitized,
+			);
+	}
+
+	public static function nicename($key)
+	{
+		$hashmap = array(
+			'gender'          => 'Jenis Kelamin',
+			'email'           => 'E-mail',
+			'year_entry'      => 'Tahun Masuk',
+			'year_graduate'   => 'Tahun Lulus',
+			'priority'        => 'Prioritas Masuk JTL',
+			'current_address' => 'Alamat Sekarang',
+			'contact_number'  => 'Nomor Telepon/HP',
+			'socmed_facebook' => 'Facebook',
+			'socmed_twitter'  => 'Twitter',
+			);
+
+		return $hashmap[$key];
+	}
+
 }

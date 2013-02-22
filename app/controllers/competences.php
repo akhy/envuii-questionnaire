@@ -1,9 +1,8 @@
 <?php 
 
-/**
-* 
-*/
-class Competences extends MY_Controller
+require_once(APPPATH.'core/MY_AlumniController.php');
+
+class Competences extends MY_AlumniController
 {
 
 	protected function view($template)

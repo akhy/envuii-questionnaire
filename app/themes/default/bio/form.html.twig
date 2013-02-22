@@ -1,0 +1,78 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h5>Form Data Alumni</h5>
+<form action="{{ site_url('bio/edit') }}" method="post" class="form form-vertical">
+	<label>NIM</label>
+	<input type="text" readonly value="{{ current.username }}" class="span2">
+
+	<label>Nama Lengkap</label>
+	<input type="text" readonly value="{{ current.name }}" class="span4">
+
+	<div class="control-group {{ errors.gender|error_class }}">
+		<label>Jenis Kelamin</label>
+		<div>
+			<label class="radio">
+				{{ form_radio('gender', 'Laki-Laki', (old.gender == 'Laki-Laki')|default(bio.gender == 'Laki-Laki') ) }}
+				Laki-laki
+			</label>
+			<label class="radio">
+				{{ form_radio('gender', 'Perempuan', (old.gender == 'Perempuan')|default(bio.gender == 'Perempuan') ) }}
+				Perempuan
+			</label>
+		</div>
+	</div>
+
+	<div class="control-group {{ errors.year_entry|error_class }}">
+		<label>Tahun Masuk</label>
+		{{ form_input('year_entry', old.year_entry|default(bio.year_entry), '') }}
+	</div>
+
+	<div class="control-group {{ errors.year_graduate|error_class }}">
+		<label>Tahun Lulus</label>
+		{{ form_input('year_graduate', old.year_graduate|default(bio.year_graduate), '') }}
+	</div>
+	
+	<div class="control-group {{ errors.priority|error_class }}">
+		<label>Saat mendaftar kuliah, Teknik Lingkungan menjadi pilihan ke...</label>
+		{{ form_dropdown('priority', {'':'', '1': 'Pilihan ke-1', '2': 'Pilihan ke-2', '3': 'Pilihan ke-3'}, old.priority|default(bio.priority) ) }}
+	</div>
+
+	<div class="control-group {{ errors.current_address|error_class }}">
+		<label>Alamat Sekarang</label>
+		{{ form_textarea('current_address', old.current_address|default(bio.current_address)) }}
+	</div>
+
+	<div class="control-group {{ errors.contact_number|error_class }}">
+		<label>Nomor Telepon/Handphone</label>
+		{{ form_input('contact_number', old.contact_number|default(bio.contact_number), '') }}
+	</div>
+
+	<div class="control-group {{ errors.email|error_class }}">
+		<label>E-mail</label>
+		{{ form_input('email', old.email|default(bio.email), '') }}
+	</div>
+
+	<label>Link Social Media</label>
+	<div class="control-group {{ errors.socmed_facebook|error_class }}">
+		<span class="input-prepend">
+			<span class="add-on"><i class="icon icon-facebook"></i></span>
+			
+			{{ form_input('socmed_facebook', old.socmed_facebook|default(bio.socmed_facebook), '') }}
+		</span>
+	</div>
+	<div class="control-group {{ errors.socmed_twitter|error_class }}">
+		<span class="input-prepend">
+			<span class="add-on"><i class="icon icon-twitter"></i></span>
+			{{ form_input('socmed_twitter', old.socmed_twitter|default(bio.socmed_twitter), '') }}
+		</span>
+		<span class="help-block">Misal: @<strong>environmentUII</strong></span>
+	</div>
+
+	<div class="form-actions">
+		<input type="submit" class="btn btn-primary">
+		<input type="reset" class="btn">
+	</div>
+</form>
+{% endblock %}

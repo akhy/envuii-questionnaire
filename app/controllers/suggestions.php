@@ -1,6 +1,8 @@
 <?php 
 
-class Suggestions extends MY_Controller {
+require_once(APPPATH.'core/MY_AlumniController.php');
+
+class Suggestions extends MY_AlumniController {
 
 	protected function view($template)
 	{

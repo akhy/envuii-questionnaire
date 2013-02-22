@@ -1,0 +1,12 @@
+{% extends _layout %}
+
+{% block content %}
+	<h5>{{ current.name }}</h5>
+
+	<dl class="dl-horizontal">
+	{% for key,value in bio %}
+	    <dt>{{ key }}</dt>
+	    <dd>{{ value|default('-') }}</dd>
+	{% endfor %}
+	</dl>
+{% endblock %}
