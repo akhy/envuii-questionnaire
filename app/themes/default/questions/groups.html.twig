@@ -1,0 +1,18 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<div class="well">
+		Sebelum mengisi form tracer study, silakan pilih salah satu pilihan di bawah yang sesuai dengan kondisi anda <strong>setelah lulus dari Teknik Lingkungan Universitas Islam Indonesia</strong>
+	</div>
+
+	<div class="row">
+	{% for group in groups %}
+		<div class="span4 offset3">
+	    {{ anchor(group.url(), group.description, 'class="btn input-block-level"') }}
+		<div>&nbsp;</div>
+		</div>
+	{% endfor %}
+	</div>
+	<hr>
+{% endblock %}

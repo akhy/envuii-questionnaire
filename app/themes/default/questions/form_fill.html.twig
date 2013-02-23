@@ -1,0 +1,10 @@
+<form action="{{ site_url('questions/' ~ question.meta_table ~ '/' ~ question.id) }}" method="post">
+	{% if question.meta().input_type == 'textarea' %}
+		<textarea name="fill" class="span10"></textarea>
+	{% else %}
+		<input type="text" name="fill" class="span5"></input>
+		<div class="clearfix"></div>
+	{% endif %}
+	
+	<input type="submit" value="Simpan Jawaban" class="btn btn-primary">
+</form>

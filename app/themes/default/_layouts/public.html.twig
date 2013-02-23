@@ -3,6 +3,7 @@
 <head>
 	<title>{{ title }}</title>
 	{{ css('lib/bootstrap/css/bootstrap.min.css') }}
+	{{ css('lib/bootstrap/css/bootstrap-responsive.min.css') }}
 	{{ css('lib/elusive/css/elusive-webfont.css') }}
 	{{ less('less/public.less') }}
 	{{ js('js/less.js') }}
@@ -12,7 +13,7 @@
 </head>
 <body>
 
-	<div class="container">
+	<div class="container container-fluid">
 		<div class="row">
 			<div class="span2">
 				{% if current %}
@@ -28,9 +29,11 @@
 			</div>
 			<div class="span10">
 				<div class="page-header">
-					<h4>
+					<h3>
+						{{ img({'src': 'img/uii.jpg', 'width': '50'}) }}
+						&nbsp; &nbsp; 
 						Tracer Study - Environmental Engineering UII
-					</h4>
+					</h3>
 				</div>
 
 				{% for type,alert in alerts %}

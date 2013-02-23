@@ -3,12 +3,20 @@
 {% block content %}
 
 <div class="alert alert-info">
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+	<p>
+		 Isilah form di bawah dengan skala 1-5. 1 = Sangat rendah, 5 = Sangat tinggi
+	</p>
+
+	<p>
+		<strong>Level kompetensi:</strong> 
+		Pada saat lulus, pada tingkat mana kompetensi di bawah ini anda kuasai? 
+	</p>
+	<p>
+		<strong>Kontribusi Kampus:</strong> 
+		Pada saat lulus, bagaimana kontribusi perguruan tinggi dalam hal kompetensi di bawah ini?
+	</p>
+
 </div>
 
 <form action="{{ site_url('competences/form') }}" method="post">
@@ -45,8 +53,8 @@
 		</tbody>
 	</table>
 
-	<input type="submit" value="Submit" class="btn btn-large btn-primary"/>
-	<input type="reset" value="Reset" class="btn btn-large "/>
+	<input type="submit" value="Submit" class="btn btn-primary"/>
+	<input type="reset" value="Reset" class="btn "/>
 </form>
 
 {% endblock %}

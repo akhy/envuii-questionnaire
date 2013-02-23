@@ -1,0 +1,14 @@
+{% extends _layout %}
+
+{% block content %}
+
+	<div class="page-header">
+		<h5>Pertanyaan ke {{ question.order }}</h5>
+		<h3>{{ question.title }}</h3>
+	</div>
+	<p>{{ question.meta().description }}</p>
+
+	{% include 'questions/form_' ~ question.meta_table ~ '.html.twig' %}
+	<hr>
+
+{% endblock %}

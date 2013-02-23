@@ -1,0 +1,39 @@
+<form action="{{ site_url('questions/' ~ question.meta_table ~ '/' ~ question.id) }}" method="post">
+	
+	{% set meta = question.meta() %}
+
+	{% if meta.multi_answers %}
+		{# Checkbox Type #}
+		{% for choice in meta.choices %}
+			<label for="choice-{{ choice.id }}" class="checkbox">
+				<input id="choice-{{ choice.id }}" type="checkbox" 
+				name="choice_id[]" value="{{ choice.id }}">
+				{{ choice.text }}
+			</label>
+	    {% endfor %}
+		{% if meta.allow_fill %}
+			<label for="choice-custom" class="checkbox">
+				<input id="choice-custom" type="checkbox" name="choice_id[]" value="0">
+				<input name="fill" type="text" placeholder="Lainnya, sebutkan...">
+			</label>
+		{% endif %}
+	{% else %}
+		{# Radio Type #}
+		{% for choice in meta.choices %}
+			<label for="choice-{{ choice.id }}" class="radio">
+				<input id="choice-{{ choice.id }}" type="radio" 
+				name="choice_id" value="{{ choice.id }}">
+				{{ choice.text }}
+			</label>
+	    {% endfor %}
+		{% if meta.allow_fill %}
+			<label for="choice-custom" class="radio">
+				<input id="choice-custom" type="radio" name="choice_id" value="0">
+				<input name="fill" type="text" placeholder="Lainnya, sebutkan...">
+			</label>
+		{% endif %}
+
+	{% endif %}
+	<a href="#" class="btn">&laquo; Kembali ke pertanyaan sebelumnya</a>
+	<input type="submit" value="Simpan dan lanjutkan ke pertanyaan selanjutnya &raquo;" class="btn btn-primary">
+</form>
