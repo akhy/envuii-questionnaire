@@ -6,7 +6,18 @@
 	{% for question in group.questions().get() %}
 	    <tr>
 	    	<td>{{ question.order }}</td>
-	    	<td>{{ anchor(question.url, question.title) }}</td>
+	    	<td>
+	    		{% if question.meta().description %}
+		    		{{ anchor(question.url, question.meta().description) }}
+	    		{% else %}
+		    		{{ anchor(question.url, question.title) }}
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if question.answers().exists() %}
+	    			&check;
+	    		{% endif %}
+	    	</td>
 	    </tr>
 	{% endfor %}
 	</table>
