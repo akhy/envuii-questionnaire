@@ -1,6 +1,11 @@
 <?php 
 
-class Answer {
+class Answer extends DataMapper {
+
+	public static function init()
+	{
+		return new Answer;
+	}
 
 	public static function choose($question_id, $choice_id = null, $fill = null)
 	{
@@ -20,10 +25,10 @@ class Answer {
 		$CI =& get_instance();
 
 		$CI->db->insert('answers', array(
-			'user_id' => User::current()->id,
+			'user_id'     => User::current()->id,
 			'question_id' => $question_id,
-			'choice_id' => $choice_id,
-			'fill' => $fill == '' ? null : $fill, 
+			'choice_id'   => $choice_id,
+			'fill'        => $fill == '' ? null : $fill, 
 			));
 	}
 
@@ -32,10 +37,10 @@ class Answer {
 		$CI =& get_instance();
 
 		$CI->db->insert('answers', array(
-			'user_id' => User::current()->id,
+			'user_id'     => User::current()->id,
 			'question_id' => $question_id,
-			'choice_id' => null,
-			'fill' => $fill == '' ? null : $fill, 
+			'choice_id'   => null,
+			'fill'        => $fill == '' ? null : $fill, 
 			));
 	}
 

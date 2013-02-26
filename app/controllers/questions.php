@@ -39,17 +39,39 @@ class Questions extends MY_AlumniController {
 			->display();
 	}
 
-	public function post_fill($id)
+	public function post_answer($type, $id)
 	{
 		$post = $this->input->post();
+
+		$this->$type($id, $post);
+
+		$next = Question::one($id)->next();
+		if($next->exists())
+		{
+			redirect($next->url());
+		}
+		else
+		{
+			Alert::push('success', 'Terima kasih telah mengisi tracer study.');
+
+			redirect('questions/complete');
+		}
+	}
+
+	private function fill($id, $post)
+	{
 		Answer::fill($id, $post['fill']);
 	}
 
-	public function post_choose($id)
+	private function choose($id, $post)
 	{
-		$post = $this->input->post();
-		var_dump($post);
 		Answer::choose($id, $post['choice_id'], $post['fill']);
+	}
+
+	public function get_complete()
+	{
+		$this->view('questions/complete')
+			->display();
 	}
 
 	// public function get_show($id)

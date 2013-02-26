@@ -1,5 +1,3 @@
-<form action="{{ site_url('questions/' ~ question.meta_table ~ '/' ~ question.id) }}" method="post">
-	
 	{% set meta = question.meta() %}
 
 	{% if meta.multi_answers %}
@@ -34,6 +32,3 @@
 		{% endif %}
 
 	{% endif %}
-	<a href="#" class="btn">&laquo; Kembali ke pertanyaan sebelumnya</a>
-	<input type="submit" value="Simpan dan lanjutkan ke pertanyaan selanjutnya &raquo;" class="btn btn-primary">
-</form>
