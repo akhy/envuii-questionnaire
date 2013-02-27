@@ -2,8 +2,9 @@
 
 {% block content %}
 	
-	<h4>Review Isian Form Anda</h4>	
-	<div class="clearfix"></div>
+	<h4>Form 2: Tracer Study</h4>
+
+	<h5>{{ group.description }}</h5>	
 	<ol>
 	{% for question in group.questions().get() %}
 		<li>
@@ -23,4 +24,11 @@
 	{% endfor %}
 	</ol>
 
+	<div class="alert alert-info">
+		<p>
+		<strong>Terima kasih</strong> telah mengisi form tracer study, silakan melanjutkan ke form kompetensi alumni.
+		</p>
+
+		{{ anchor('competences', 'Lanjutkan  ke Form 3 &raquo;', 'class="btn"') }} 
+	</div>
 {% endblock %}

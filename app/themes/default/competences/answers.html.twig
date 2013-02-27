@@ -2,9 +2,7 @@
 
 {% block content %}
 
-<div class="alert alert-info">
-	Anda sudah mengisi form kompetensi alumni. Silakan {{ anchor('competences/reset', 'KLIK DI SINI')}} untuk menghapus jawaban anda dan mengisi kembali form kompetensi alumni.
-</div>
+<h4>Form 3: Kompetensi Alumni</h4>
 
 <table class="table table-striped table-condensed">
 	<thead>
@@ -42,4 +40,12 @@
 	{% endfor %}
 	</tbody>
 </table>
+
+<div class="alert alert-info">
+	<p>
+	Anda sudah mengisi form kompetensi alumni. Silakan {{ anchor('competences/reset', 'KLIK DI SINI')}} untuk menghapus jawaban anda dan mengisi kembali form kompetensi alumni.
+	</p>
+
+	{{ anchor('suggestions', 'Lanjutkan ke Form 4 &raquo;', 'class="btn"') }} 
+</div>
 {% endblock %}

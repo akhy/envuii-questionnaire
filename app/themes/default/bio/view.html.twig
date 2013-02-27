@@ -1,12 +1,25 @@
 {% extends _layout %}
 
 {% block content %}
-	<h5>{{ current.name }}</h5>
 
+	<h4>Form 1: Data Alumni</h4>
+	
 	<dl class="dl-horizontal">
+		<dt>NIM</dt>
+		<dd>{{ current.username }}</dd>
+		<dt>Nama</dt>
+		<dd>{{ current.name }}</dd>
 	{% for key,value in bio %}
 	    <dt>{{ key }}</dt>
 	    <dd>{{ value|default('-') }}</dd>
 	{% endfor %}
 	</dl>
+
+	<div class="alert alert-info">
+		<p>
+		<strong>Terima kasih</strong> telah mengisi data diri, silakan melanjutkan ke form tracer study selanjutnya.
+		</p>
+
+		{{ anchor('questions', 'Lanjutkan ke Form 2 &raquo;', 'class="btn"') }} 
+	</div>
 {% endblock %}
