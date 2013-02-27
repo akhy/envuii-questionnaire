@@ -13,6 +13,11 @@ class Questions extends MY_AlumniController {
 
 	public function get_index()
 	{
+		$user = User::current();
+		if($user->group_id !== null)
+			redirect($user->group()->url());
+
+		
 		$groups = Group::init()->get();
 
 		$this->view('questions/groups')
@@ -21,11 +26,25 @@ class Questions extends MY_AlumniController {
 			->display();
 	}
 
+	public function get_select($id)
+	{
+		$group = Group::one($id);
+
+		// TODO: Pindahin ke model 
+		$user = User::current();
+		$user->group_id = $group->id;
+		$user->save();
+
+		redirect($group->first()->url());
+	}
+
 	public function get_group($slug)
 	{
+		
 		$group = Group::by_slug($slug);
 
 		$this->view('questions/index')
+			->prepend($group->description)
 			->set('group', $group)
 			->display();
 	}
@@ -43,6 +62,7 @@ class Questions extends MY_AlumniController {
 	{
 		$post = $this->input->post();
 
+		// Proses jawaban
 		$this->$type($id, $post);
 
 		$next = Question::one($id)->next();
@@ -54,7 +74,7 @@ class Questions extends MY_AlumniController {
 		{
 			Alert::push('success', 'Terima kasih telah mengisi tracer study.');
 
-			redirect('questions/complete');
+			redirect(User::current()->group()->url());
 		}
 	}
 
@@ -68,18 +88,14 @@ class Questions extends MY_AlumniController {
 		Answer::choose($id, $post['choice_id'], $post['fill']);
 	}
 
+	public function reset($id)
+	{
+
+	}
+
 	public function get_complete()
 	{
 		$this->view('questions/complete')
 			->display();
 	}
-
-	// public function get_show($id)
-	// {
-	// 	$question = Question::one($id);
-
-	// 	$this->view('questions/show')
-	// 		->set('question', $question)
-	// 		->display();
-	// }
 }

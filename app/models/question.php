@@ -37,6 +37,37 @@ class Question extends DataMapper {
 			;
 	}
 
+	public function answer_by_choice($choice_id)
+	{
+		return Answer::init()
+			->where('user_id', User::current()->id)
+			->where('question_id', $this->id)
+			->where('choice_id', $choice_id)
+			->get();
+	}
+
+	public function choice_ids()
+	{
+		$answers = $this->answers();
+
+		$ids = array();
+		foreach($answers as $answer)
+		{
+			array_push($ids, $answer->choice_id);
+		}
+
+		return $ids;
+
+	}
+
+	public function siblings()
+	{
+		return Question::init()
+			->where('group_id', $this->group_id)
+			->get()
+			;
+	}
+
 	public function prev()
 	{
 		return Question::init()

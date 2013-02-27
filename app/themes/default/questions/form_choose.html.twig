@@ -5,14 +5,23 @@
 		{% for choice in meta.choices %}
 			<label for="choice-{{ choice.id }}" class="checkbox">
 				<input id="choice-{{ choice.id }}" type="checkbox" 
-				name="choice_id[]" value="{{ choice.id }}">
+					name="choice_id[]" value="{{ choice.id }}"
+					{% if choice.id in question.choice_ids() %} checked="checked" {% endif %}
+					{% if question.answers().exists() %} disabled="disabled" {% endif %}
+				>
 				{{ choice.text }}
 			</label>
 	    {% endfor %}
 		{% if meta.allow_fill %}
 			<label for="choice-custom" class="checkbox">
-				<input id="choice-custom" type="checkbox" name="choice_id[]" value="0">
-				<input name="fill" type="text" placeholder="Lainnya, sebutkan...">
+				<input id="choice-custom" type="checkbox" name="choice_id[]" value="0"
+					{% if 0 in question.choice_ids() %} checked="checked" {% endif %}
+					{% if question.answers().exists() %} disabled="disabled" {% endif %}
+				>
+				<input name="fill" type="text" placeholder="Lainnya, sebutkan..."
+					{% if question.answer_by_choice(0).exists() %} value="{{ question.answer_by_choice(0).fill }}" {% endif %}
+					{% if question.answers().exists() %} disabled="disabled" {% endif %}
+				>
 			</label>
 		{% endif %}
 	{% else %}
@@ -20,14 +29,23 @@
 		{% for choice in meta.choices %}
 			<label for="choice-{{ choice.id }}" class="radio">
 				<input id="choice-{{ choice.id }}" type="radio" 
-				name="choice_id" value="{{ choice.id }}">
+				name="choice_id" value="{{ choice.id }}" 
+				{% if question.answers().choice_id == choice.id %} checked="checked" {% endif %}
+				{% if question.answers().exists() %} disabled="disabled" {% endif %}
+				>
 				{{ choice.text }}
 			</label>
 	    {% endfor %}
 		{% if meta.allow_fill %}
 			<label for="choice-custom" class="radio">
-				<input id="choice-custom" type="radio" name="choice_id" value="0">
-				<input name="fill" type="text" placeholder="Lainnya, sebutkan...">
+				<input id="choice-custom" type="radio" name="choice_id" value="0"
+					{% if question.answers().exists() %} disabled="disabled" {% endif %}
+					{% if question.answers().choice_id == 0 %} checked="checked" {% endif %}
+					>
+				<input name="fill" type="text" placeholder="Lainnya, sebutkan..."
+					{% if question.answers().exists() %} disabled="disabled" {% endif %}
+					{% if question.answers().fill != null %} value="{{ question.answers().fill }}" {% endif %}
+					>
 			</label>
 		{% endif %}
 

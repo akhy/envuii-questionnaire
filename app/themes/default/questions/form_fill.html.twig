@@ -1,5 +1,9 @@
 	{% if question.meta().input_type == 'textarea' %}
-		<textarea name="fill" class="span10"></textarea>
+		{% if question.answers().exists() %}
+			<textarea class="span10" disabled="disabled">{{ question.answers().fill }}</textarea>
+		{% else %}
+			<textarea name="fill" class="span10"></textarea>
+		{% endif %}    
 	{% else %}
 		{% if question.answers().exists() %}
 			<input type="text" class="span5 disabled" disabled

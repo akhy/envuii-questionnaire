@@ -22,6 +22,15 @@ class Group extends DataMapper {
 		return Question::by_group($this->id);
 	}
 
+	public function first()
+	{
+		return Question::init()
+			->where('group_id', $this->id)
+			->order_by('order')
+			->limit(1)
+			->get();
+	}
+
 	public function url()
 	{
 		return 'questions/group/'.$this->slug;

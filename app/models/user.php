@@ -244,4 +244,9 @@ class User extends DataMapper {
 		return $hashmap[$key];
 	}
 
+	public function group()
+	{
+		return Group::init()->where('id', $this->group_id)->get();
+	}
+
 }
