@@ -1,0 +1,5 @@
+*.pdf -delta
+*.jpg -delta
+*.svg -delta
+*.ttf -delta
+*.woff -delta
