@@ -15,4 +15,9 @@ class Suggestion extends DataMapper{
 		
 		return $suggestion->save();
 	}
+
+	public function user()
+	{
+		return User::init()->where('id', $this->user_id)->get();
+	} 
 }

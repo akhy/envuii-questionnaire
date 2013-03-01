@@ -1,0 +1,37 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h4>Manajemen User</h4>
+
+<table class="table">
+	<tr>
+		<th>NIM</th>
+		<th>Nama Lengkap</th>
+		<th>Tanggal Registrasi</th>
+		<th>Form 1</th>
+		<th>Form 2</th>
+		<th>Form 3</th>
+		<th>Form 4</th>
+		<th>Form 5</th>
+		<th></th>
+	</tr>
+{% for user in users %}
+	<tr>
+		<td> {{ user.username }} </td> 
+		<td> {{ user.name }} </td>
+		<td> {{ user.created_at }} </td>
+		<td> {{ user.has_bio()|yesno}} </td>
+		<td> {{ false|yesno}} </td>
+		<td> {{ user.has_competences()|yesno}} </td>
+		<td> {{ user.has_suggestion()|yesno}} </td>
+		<td> {{ false|yesno}} </td>
+		
+		<td>
+			<a href="" class="btn btn-mini">Lihat Profil</a>
+		</td>
+	</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

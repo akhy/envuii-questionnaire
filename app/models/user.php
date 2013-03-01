@@ -79,6 +79,11 @@ class User extends DataMapper {
 		return 'photo/'.$this->username.'.jpg';
 	}
 
+	public function profile_url()
+	{
+		
+	}
+
 	public function has_suggestion()
 	{
 		return $this->suggestion()->exists();
@@ -131,7 +136,7 @@ class User extends DataMapper {
 	{
 		$CI =& get_instance();
 
-		$user_id = User::current()->id;
+		$user_id = $this->id;
 
 		$raw = $CI->db->query(
 			"SELECT `key`, `value`, `nicename` FROM user_bio WHERE user_id = $user_id"

@@ -1,0 +1,14 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h4>Kritik dan Saran</h4>
+
+{% for suggestion in suggestions %}
+	<blockquote>
+		{{ suggestion.content }}    
+		<small>{{ suggestion.user().name }}</small>
+	</blockquote>
+{% endfor %}
+
+{% endblock %}

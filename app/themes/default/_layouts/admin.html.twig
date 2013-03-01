@@ -14,19 +14,7 @@
 <body>
 	<div class="container container-fluid">
 		<div class="row">
-			<div class="span2">
-				{% if current %}
-				{{ img({'src': current.photo_url(), 'width': '100'}) }}
-				<h5>
-					{{ current.name | title }}
-				</h5>
-				<div>
-					{{ anchor('users/logout', 'Logout') }}
-				</div>
-				{% include '_parts/sidebar.html.twig' %}
-				{% endif %}
-			</div>
-			<div class="span10">
+			<div class="span12">
 				<div class="page-header">
 					<h3>
 						{{ img({'src': 'img/uii.jpg', 'width': '50'}) }}
