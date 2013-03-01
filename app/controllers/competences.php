@@ -8,6 +8,7 @@ class Competences extends MY_AlumniController
 	protected function view($template)
 	{
 		return parent::view($template)
+			->prepend('Form Kompetensi Alumni')
 			->set('active', 'competences')
 			;
 	}
@@ -25,7 +26,6 @@ class Competences extends MY_AlumniController
 		$competences = User::current()->competences();
 
 		$this->view('competences/answers')
-			->prepend('Kompetensi Alumni')
 			->set('competences', $competences)
 			->display();
 	}
@@ -45,7 +45,6 @@ class Competences extends MY_AlumniController
 		$competences = Competence::all();
 
 		$this->view('competences/form')
-			->prepend('Form Kompetensi Alumni')
 			->set('competences', $competences)
 			->display();
 	}

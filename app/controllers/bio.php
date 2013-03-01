@@ -7,6 +7,7 @@ class Bio extends MY_AlumniController {
 	protected function view($template)
 	{
 		return parent::view($template)
+			->prepend('Data Alumni')
 			->set('active', 'bio');
 	}
 
@@ -23,7 +24,6 @@ class Bio extends MY_AlumniController {
 		$bio = User::current()->get_bio();
 
 		$this->view('bio/form')
-			->prepend('Edit data diri')
 			->set('bio', $bio)
 			->display()
 			;

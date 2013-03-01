@@ -44,7 +44,6 @@ class Questions extends MY_AlumniController {
 		$group = Group::by_slug($slug);
 
 		$this->view('questions/index')
-			->prepend($group->description)
 			->set('group', $group)
 			->display();
 	}
