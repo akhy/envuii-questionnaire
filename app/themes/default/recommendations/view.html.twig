@@ -1,0 +1,52 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h4>Form 5: Rekomendasi Anda</h4>
+
+{% if current.recommendations_count() >= 3 %}
+<div class="alert alert-success">
+	<p><strong>Sukses</strong>
+		Terima kasih telah mengisi penelusuran studi ini, anda dapat logout sekarang atau
+		terus mengisi form rekomendasi di bawah.
+	</p>
+
+<div class="btn-group">
+{{ anchor('recommendations/form', 'Tambahkan Rekomendasi', 'class="btn"') }}
+{{ anchor('users/logout', 'Logout', 'class="btn"') }}
+</div>
+</div>
+{% endif %}
+
+{% for recommendation in current.recommendations() %}
+    <dl class="dl-horizontal">
+    	<p>
+    	<strong>Nama: </strong>
+    	<span>{{ recommendation.name }}</span><br>
+    	</p>
+
+
+    	<p>
+    	<strong>Angkatan: </strong>
+    	<span>{{ recommendation.classyear }}</span><br>
+    	</p>
+
+
+    	<p>
+    	<strong>Alamat: </strong>
+    	<span>{{ recommendation.address }}</span><br>
+    	</p>
+
+
+    	<p>
+    	<strong>Kontak: </strong>
+    	<span>{{ recommendation.contact }}</span><br>
+    	</p>
+
+    </dl>
+
+{% else %}
+        Anda belum merekomendasikan teman anda.
+{% endfor %}
+
+{% endblock %}	

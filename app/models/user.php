@@ -100,6 +100,21 @@ class User extends DataMapper {
 		return Suggestion::init()->where('user_id', $this->id)->get();
 	}
 
+	public function has_recommendations()
+	{
+		return $this->recommendations()->exists();
+	}
+
+	public function recommendations()
+	{
+		return Recommendation::init()->where('user_id', $this->id)->get();
+	}
+
+	public function recommendations_count()
+	{
+		return Recommendation::init()->where('user_id', $this->id)->count();
+	}
+
 	public function has_competences()
 	{
 		$CI =& get_instance();
