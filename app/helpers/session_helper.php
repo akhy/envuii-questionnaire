@@ -21,3 +21,11 @@ if ( ! function_exists('redirect'))
 		exit;
 	}
 }
+
+if ( ! function_exists('redirect_back'))
+{
+	function redirect_back($method = 'location', $http_response_code = 302)
+	{
+		redirect($_SERVER['HTTP_REFERER'], $method, $http_response_code);
+	}
+}

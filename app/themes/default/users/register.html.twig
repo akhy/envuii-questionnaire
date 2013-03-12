@@ -2,29 +2,31 @@
 
 {% block content %}
 	
-	<form action="{{ site_url('users/login') }}" method="post" class="form">
+	<form action="{{ site_url('users/register') }}" method="post" class="form">
 
 		<div class="row">
 
 			<div class="span5">
 				{{ img('img/unisys.jpg') }}
-				<blockquote>
-					<!-- Silakan login menggunakan akun UNISYS untuk memverifikasi bahwa anda adalah 
+				<h3>Register via Unisys</h3>
+				<p>
+					Selamat datang di Tracer Study Teknik Lingkungan UII. Untuk mengisi
+					quesioner alumni, silakan memasukkan username dan password Unisys 
+					anda pada form di samping untuk memverifikasi bahwa anda adalah 
 					alumni Jurusan Teknik Lingkungan UII. Bila menemui kesulitan, hubungi
-					administrator. -->
-				</blockquote>
+					administrator.
+				</p>
 			</div>
 
 			<div class="span5">
-				<h3>LOGIN</h3>
 				<label>NIM</label>
 				<input type="text" name="username" placeholder="Misal: 08523108" />
 
-				<label>Password</label>
+				<label>Password UNISYS</label>
 				<input type="password" name="password" placeholder="Password" />
 
 				<div class="clearfix"></div>
-				<input type="submit" value="Login Tracer Study" class="btn btn-primary">
+				<input type="submit" value="Register via UNISYS" class="btn btn-primary">
 				
 				{{ anchor('users/register', 'Tidak bisa login?') }}
 			</div>

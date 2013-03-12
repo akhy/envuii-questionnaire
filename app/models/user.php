@@ -41,20 +41,26 @@ class User extends DataMapper {
 			return $user;
 		}
 
+		return false;
+	}
+
+	public static function auth_unisys($username, $password)
+	{
+		$CI =& get_instance();
+
 		$username = $CI->unisys->auth($username, $password);
 		if ($username)
 		{
-			
-			$CI->session->set_userdata('username', $username);
 			$data = $CI->unisys->data();
 			$photo_path = realpath(APPPATH).'/../photo/'.$CI->unisys->username.'.jpg';
 			$CI->unisys->fetch_photo($photo_path);
 
-			$user = User::upsert(array(
+			$user = array(
 				'username' => $username,
 				'password' => base64_encode($password),
 				'name'     => $data['name'],
-				));
+				'verified' => true,
+				);
 
 			return $user;
 		}
