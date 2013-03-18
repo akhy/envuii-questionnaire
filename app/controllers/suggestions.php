@@ -4,6 +4,17 @@ require_once(APPPATH.'core/MY_AlumniController.php');
 
 class Suggestions extends MY_AlumniController {
 
+	public function __construct()
+	{
+		parent::__construct();
+
+		if(! User::current()->has_competences)
+		{
+			Alert::push('warning', 'Anda harus mengisi form kompetensi terlebih dahulu');
+			redirect('competences/form');
+		}
+	}
+
 	protected function view($template)
 	{
 		return parent::view($template)

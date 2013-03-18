@@ -4,6 +4,17 @@ require_once(APPPATH.'core/MY_AlumniController.php');
 
 class Recommendations extends MY_AlumniController {
 
+	public function __construct()
+	{
+		parent::__construct();
+
+		if(! User::current()->has_suggestion)
+		{
+			Alert::push('warning', 'Anda harus mengisi form kritik dan saran terlebih dahulu');
+			redirect('suggestions/form');
+		}
+	}
+
 	protected function view($template)
 	{
 		return parent::view($template)

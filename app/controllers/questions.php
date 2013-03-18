@@ -4,6 +4,17 @@ require_once(APPPATH.'core/MY_AlumniController.php');
 
 class Questions extends MY_AlumniController {
 
+	public function __construct()
+	{
+		parent::__construct();
+
+		if(! User::current()->has_bio())
+		{
+			Alert::push('warning', 'Anda harus mengisi form data diri terlebih dahulu');
+			redirect('bio/edit');
+		}
+	}
+
 	protected function view($template)
 	{
 		return parent::view($template)

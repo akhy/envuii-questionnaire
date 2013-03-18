@@ -4,6 +4,16 @@ require_once(APPPATH.'core/MY_AlumniController.php');
 
 class Competences extends MY_AlumniController
 {
+	public function __construct()
+	{
+		parent::__construct();
+
+		if(User::current()->group_id == null)
+		{
+			Alert::push('warning', 'Anda harus mengisi tracer study terlebih dahulu');
+			redirect('questions');
+		}
+	}
 
 	protected function view($template)
 	{
