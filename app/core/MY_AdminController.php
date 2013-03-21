@@ -6,7 +6,11 @@ class MY_AdminController extends MY_Controller
 	{
 		parent::__construct();
 
-		// Placeholder
+		if(! $this->session->userdata('is_admin'))
+		{
+			Alert::push('error', 'Silakan login ke dalam sistem untuk mengakses halaman admin.');
+			redirect('admin/auth');
+		}
 	}
 
 	protected function view($template)

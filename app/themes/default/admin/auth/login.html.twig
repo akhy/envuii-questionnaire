@@ -1,0 +1,20 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<h3>Login Admin</h3>
+
+
+	<form action="{{ site_url('admin/auth/login') }}" method="post" class="form">
+		<label>Username</label>
+		<input type="text" name="username" />
+
+		<label>Password Admin</label>
+		<input type="password" name="password" />
+
+		<p>
+			<input type="submit" value="Login" class="btn btn-primary"/>
+		</p>
+	</form>
+
+{% endblock %}

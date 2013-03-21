@@ -36,7 +36,8 @@ class Users extends MY_Controller {
 	public function get_logout()
 	{
 		$this->session->sess_destroy();
-
+			
+		Alert::push('info', 'Anda telah logout dari sistem.');
 		redirect('users/login');
 	}
 
