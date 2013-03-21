@@ -80,6 +80,17 @@ class User extends DataMapper {
 		return $user;
 	}
 
+	public function purge()
+	{
+		Answer::init()->where('user_id', $this->id)->get()->delete_all();
+		Suggestion::init()->where('user_id', $this->id)->get()->delete_all();
+		Recommendation::init()->where('user_id', $this->id)->get()->delete_all();
+		$this->db->query("DELETE FROM user_competence WHERE user_id={$this->id}");
+		$this->db->query("DELETE FROM user_bio WHERE user_id={$this->id}");
+
+		return $this->delete();
+	}
+
 	public function photo_url()
 	{
 		return 'photo/'.$this->username.'.jpg';
@@ -143,8 +154,8 @@ class User extends DataMapper {
 		$CI =& get_instance();
 
 		return $CI->db->query(
-			"SELECT * FROM vu_competences 
-			 WHERE user_id = {$this->id}"
+			"SELECT `uc`.`user_id` AS `user_id`,`uc`.`competence_id` AS `competence_id`,`uc`.`level` AS `level`,`uc`.`contribution` AS `contribution`,`c`.`statement` AS `statement` from (`user_competence` `uc` left join `competences` `c` on((`uc`.`competence_id` = `c`.`id`)))
+			 WHERE uc.user_id = {$this->id}"
 			)->result();
 	}
 
@@ -170,6 +181,7 @@ class User extends DataMapper {
 
 		return $result;
 	}
+
 	public function set_bio($array)
 	{
 		$this->bio = $array;

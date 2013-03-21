@@ -17,7 +17,15 @@
 		<th></th>
 	</tr>
 {% for user in users %}
-	<tr>
+	
+	{% if user.verified == 0 %}
+		{% set class = 'error' %}
+	{% else %}
+		{% set class = '' %}
+	{% endif %}
+
+	<tr class="{{ class }}">
+
 		<td> {{ user.username }} </td> 
 		<td> {{ user.name }} </td>
 		<td> {{ user.created_at }} </td>
@@ -29,6 +37,12 @@
 		
 		<td>
 			<a href="" class="btn btn-mini">Lihat Profil</a>
+			{% if not user.verified %}
+
+			{{ anchor('admin/users/approve/' ~ user.id, '&check; Approve', 'class="btn btn-mini btn-success"') }}
+			{{ anchor('admin/users/delete/' ~ user.id, '&cross; Delete User', 'class="btn btn-mini btn-danger"') }}
+
+			{% endif %}
 		</td>
 	</tr>
 {% endfor %}
