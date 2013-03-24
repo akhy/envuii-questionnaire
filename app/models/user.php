@@ -131,6 +131,29 @@ class User extends DataMapper {
 		return Recommendation::init()->where('user_id', $this->id)->count();
 	}
 
+	public function answered_questions()
+	{
+		$rows = Answer::init()
+			->where('user_id', $this->id)
+			->group_by('question_id')
+			->get();
+
+		$questions = array();
+		foreach ($rows as $row) {
+			$questions[] = Question::one($row->question_id);
+		}
+		
+		return $questions;
+	}
+
+	public function is_complete_answers()
+	{
+		$questions_count = $this->group()->questions()->get()->result_count();
+		$answered_count = count($this->answered_questions());
+
+		return $answered_count >= $questions_count;
+	}
+
 	public function has_competences()
 	{
 		$CI =& get_instance();

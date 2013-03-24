@@ -53,6 +53,15 @@ class Question extends DataMapper {
 			->get();
 	}
 
+	public function answer_by($user)
+	{
+		return Answer::init()
+			->where('user_id', $user->id)
+			->where('question_id', $this->id)
+			->get()
+			;
+	}
+
 	public function choice_ids()
 	{
 		$answers = $this->answers();

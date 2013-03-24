@@ -1,0 +1,31 @@
+<h6>Pilihan: {{ user.group().description|default('-') }}</h6>
+
+{% set questions = user.answered_questions() %}
+
+{% if count(questions) == 0 %}
+    <div class="alert">Belum mengisi form tracer study</div>
+{% else %}
+	<ol>
+	{% for question in questions %}
+		<li> {{ anchor(question.admin_url(), question.title) }} 
+
+			{% set answers = question.answer_by(user) %}
+
+			{% if answers.count() == 1 %}
+				<br>{{ answers.fill }}
+			{% else %}
+				<ul>
+					{% for answer in answers %}
+						{% if answer.choice_id == 0 %}
+							<li>{{ answer.fill }}</li>
+						{% else %}
+							<li>{{ answer.choice().text }}</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			{% endif %}
+
+		</li> 
+	{% endfor %}
+	</ol>
+{% endif %}

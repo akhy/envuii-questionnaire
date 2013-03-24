@@ -8,7 +8,7 @@ class Suggestions extends MY_AlumniController {
 	{
 		parent::__construct();
 
-		if(! User::current()->has_competences)
+		if(! User::current()->has_competences())
 		{
 			Alert::push('warning', 'Anda harus mengisi form kompetensi terlebih dahulu');
 			redirect('competences/form');
