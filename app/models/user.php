@@ -98,7 +98,7 @@ class User extends DataMapper {
 
 	public function profile_url()
 	{
-		
+		return 'admin/users/profile/'.$this->id;
 	}
 
 	public function has_suggestion()

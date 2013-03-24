@@ -32,6 +32,11 @@ class Answer extends DataMapper {
 			));
 	}
 
+	public function user()
+	{
+		return User::init()->where('id', $this->user_id)->get();
+	}
+
 	public static function fill($question_id, $fill)
 	{
 		$CI =& get_instance();

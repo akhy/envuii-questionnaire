@@ -17,9 +17,24 @@ class Group extends DataMapper {
 		return Group::init()->where('slug', $slug)->limit(1)->get();
 	}
 
+	public function users()
+	{
+		return User::init()->where('group_id', $this->id);
+	}
+
 	public function questions()
 	{
 		return Question::by_group($this->id);
+	}
+
+	public function last_order()
+	{
+		$max = $this->db->query(
+			"SELECT MAX(`order`) `max` 
+			 FROM questions 
+			 WHERE group_id = {$this->id}")->row();
+		
+		return (int) $max->max;
 	}
 
 	public function first()
@@ -34,5 +49,10 @@ class Group extends DataMapper {
 	public function url()
 	{
 		return 'questions/group/'.$this->slug;
+	}
+
+	public function admin_url()
+	{
+		return 'admin/questions?group_id='.$this->id;
 	}
 }

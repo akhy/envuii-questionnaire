@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>{{ title }}</title>
-	{{ css('lib/bootstrap/css/bootstrap.journal.min.css') }}
+	{{ css('lib/bootstrap/css/bootstrap.min.css') }}
 	{{ css('lib/bootstrap/css/bootstrap-responsive.min.css') }}
 	{{ css('lib/elusive/css/elusive-webfont.css') }}
 	{{ less('less/public.less') }}
@@ -50,6 +50,9 @@
 	<script type="text/javascript">
 		$(function(){
 			$('#{{ active }}').addClass('active');
+			$('.delete').click(function(){
+				return confirm('Anda yakin ingin menghapus data ini?');
+			});
 		});
 	</script>
 

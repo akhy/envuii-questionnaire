@@ -18,4 +18,9 @@ class Choice extends DataMapper {
 	{
 		return Choice::init()->where('meta_id', $id)->get();
 	}
+
+	public function answers()
+	{
+		return Answer::init()->where('choice_id', $this->id);
+	}
 }

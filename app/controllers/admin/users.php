@@ -40,4 +40,9 @@ class Users extends MY_AdminController {
 		Alert::push('success', 'The user has been deleted from system.');
 		redirect_back();
 	}
+
+	public function get_profile($id)
+	{
+		
+	}
 }

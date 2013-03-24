@@ -11,6 +11,8 @@ class MY_AdminController extends MY_Controller
 			Alert::push('error', 'Silakan login ke dalam sistem untuk mengakses halaman admin.');
 			redirect('admin/auth');
 		}
+
+		$this->load->helper('text');
 	}
 
 	protected function view($template)

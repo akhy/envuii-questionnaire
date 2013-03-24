@@ -28,6 +28,13 @@ class Question extends DataMapper {
 		return Group::one($this->group_id)->get();
 	}
 
+	public function answers_all()
+	{
+		// TODO: tuker dengan fungsi answers()
+		return Answer::init()
+				->where('question_id', $this->id)
+				;
+	}
 	public function answers()
 	{
 		return Answer::init()
@@ -97,9 +104,51 @@ class Question extends DataMapper {
 		return call_user_func($class_name . '::one', $this->meta_id);
 	}
 
+	public function create($data)
+	{
+		// Separate main data and metadata
+		$meta = array();
+		if(array_key_exists('meta', $data))
+		{
+			$meta = $data['meta'];
+			unset($data['meta']);
+		} 
+
+		// Create Metadata row		
+		$meta_class = 'Meta'.ucfirst($data['meta_table']);
+		$meta = call_user_func($meta_class.'::create', $meta);
+
+		// Create the question row
+		$question = Question::init();
+		foreach ($data as $key => $value) {
+			$question->$key = $value;
+		}
+		$group = Group::one($question->group_id);
+		$question->meta_id = $meta->id;
+		$question->order = $group->last_order() + 1;
+		$question->save();
+
+		return $question;
+	}
+
+	public function delete()
+	{
+		// delete the meta first
+		$meta_class = 'Meta'.ucfirst($this->meta_table);
+		$meta = call_user_func($meta_class.'::one', $this->meta_id);
+		$meta->delete();
+
+		return parent::delete();
+	}
+
 	public function url()
 	{
 		return 'questions/view/'.$this->id;
+	}
+
+	public function admin_url()
+	{
+		return 'admin/questions/detail/'.$this->id;
 	}
 
 }

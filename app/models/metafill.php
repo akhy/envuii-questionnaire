@@ -13,4 +13,15 @@ class MetaFill extends DataMapper {
 	{
 		return MetaFill::init()->where('id', $id)->get();
 	}
+
+	public static function create($arr)
+	{
+		$meta = MetaFill::init();
+		foreach ($arr as $key => $value) {
+			$meta->$key = $value;
+		}
+		$meta->save();
+
+		return $meta;
+	}
 }
