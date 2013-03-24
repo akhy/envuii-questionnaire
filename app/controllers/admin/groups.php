@@ -8,11 +8,14 @@ class Groups extends MY_AdminController {
 	{
 		return parent::view($template)
 			->prepend('Question Group')
+			->set('active', 'questions')
 			;
 	} 
 
 	public function get_index()
 	{
+		$this->breadcrumbs[] = anchor('admin/groups', 'Group Pertanyaan');
+
 		$groups = Group::init()->get();
 
 		$this->view('groups/index')

@@ -2,6 +2,8 @@
 
 class MY_AdminController extends MY_Controller
 {
+	public $breadcrumbs;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -20,6 +22,7 @@ class MY_AdminController extends MY_Controller
 		return parent::view('admin/'.$template)
 			->layout('admin')
 			->prepend('Admin Area')
+			->set('breadcrumbs', $this->breadcrumbs)
 			;
 	}
 }

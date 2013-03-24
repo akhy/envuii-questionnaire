@@ -23,6 +23,25 @@
 					</h3>
 				</div>
 
+				<ul class="nav nav-tabs">
+					<li id="users">{{ anchor('admin/users', 'Alumni') }}</li>
+					<li id="questions">{{ anchor('admin/groups', 'Tracer Study') }}</li>
+					<li id="suggestions">{{ anchor('admin/suggestions', 'Kritik dan Saran') }}</li>
+				</ul>
+
+				<ul class="breadcrumb">
+					<li>{{ anchor('#', 'Home') }} <span class="divider">&raquo;</spa</li>
+					{% for key,breadcrumb in breadcrumbs %}
+						{% if key == count(breadcrumbs) - 1 %}
+					  	<li class="active">{{ breadcrumb|striptags }}</li>
+					  {% else %}
+					    <li>
+					    {{ breadcrumb }} <span class="divider">&raquo;</span>
+					    </li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+
 				{% for type,alert in alerts %}
 					<div class="alert alert-{{ type }}">{{ alert }}</div>
 				{% endfor %}
@@ -50,6 +69,7 @@
 	<script type="text/javascript">
 		$(function(){
 			$('#{{ active }}').addClass('active');
+			$('.breadcrumb li:last-child').addClass('active');
 			$('.delete').click(function(){
 				return confirm('Anda yakin ingin menghapus data ini?');
 			});

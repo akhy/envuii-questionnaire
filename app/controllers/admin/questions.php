@@ -8,17 +8,24 @@ class Questions extends MY_AdminController {
 	{
 		return parent::view($template)
 			->prepend('Manajemen Pertanyaan')
+			->set('active', 'questions')
 			;
 	} 
 
 	public function get_index()
 	{
+
 		$group_id = $this->input->get('group_id');
 
 		if(! $group_id) exit ('You must specify a question group');
 
 		$group = Group::init()->where('id', $group_id)->get();
 		$questions = Question::init()->where('group_id', $group_id)->order_by('order')->get();
+
+		$this->breadcrumbs = array(
+			anchor('admin/groups', 'Group Pertanyaan'),
+			anchor($group->admin_url(), $group->description),
+			);
 
 		$this->view('questions/index')
 			->set('group', $group)
@@ -31,6 +38,11 @@ class Questions extends MY_AdminController {
 	{
 		$question = Question::one($id);
 
+		$this->breadcrumbs = array(
+			anchor('admin/groups', 'Group Pertanyaan'),
+			anchor($question->group()->admin_url(), $question->group()->description),
+			anchor($question->admin_url(), $question->title),
+			);
 		$this->view('questions/detail')
 			->set('question', $question)
 			->display()

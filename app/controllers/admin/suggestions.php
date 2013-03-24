@@ -8,6 +8,7 @@ class Suggestions extends MY_AdminController {
 	{
 		return parent::view($template)
 			->prepend('Kritik dan Saran')
+			->set('active', 'suggestions')
 			;
 	} 
 
@@ -15,6 +16,8 @@ class Suggestions extends MY_AdminController {
 	{
 		$suggestions = Suggestion::init()->get();
 
+		$this->breadcrumbs[] = 'Kritik dan Saran';
+		
 		$this->view('suggestions/index')
 			->set('suggestions', $suggestions)
 			->display()

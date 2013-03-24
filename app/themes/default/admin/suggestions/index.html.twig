@@ -2,13 +2,15 @@
 
 {% block content %}
 
-<h4>Kritik dan Saran</h4>
+<h3>Kritik dan Saran</h3>
 
 {% for suggestion in suggestions %}
 	<blockquote>
 		{{ suggestion.content }}    
 		<small>{{ suggestion.user().name }}</small>
 	</blockquote>
+{% else %}
+	<div class="alert">Belum ada kritik dan saran untuk ditampilkan</div>
 {% endfor %}
 
 {% endblock %}

@@ -8,12 +8,14 @@ class Users extends MY_AdminController {
 	{
 		return parent::view($template)
 			->prepend('Manajemen User')
+			->set('active', 'users')
 			;
 	} 
 
 	public function get_index()
 	{
 		$users = User::init()->order_by('verified', 'asc')->get();
+		$this->breadcrumbs[] = anchor('users', 'Manajemen Alumni');
 
 		$this->view('users/index')
 			->set('users', $users)
@@ -43,6 +45,12 @@ class Users extends MY_AdminController {
 
 	public function get_profile($id)
 	{
-		
+		$user = User::one($id);
+		$this->breadcrumbs[] = anchor('admin/users', 'Manajemen Alumni');
+		$this->breadcrumbs[] = anchor($user->admin_url(), 'Profil');
+
+		$this->view('users/profile')
+			->set('user', $user)
+			->display();
 	}
 }
