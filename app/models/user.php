@@ -9,6 +9,11 @@ class User extends DataMapper {
 		return new User;
 	}
 
+	public static function one($id)
+	{
+		return User::init()->where('id', $id)->limit(1)->get();
+	}
+
 	public static function current()
 	{
 		$CI =& get_instance();
@@ -96,7 +101,7 @@ class User extends DataMapper {
 		return 'photo/'.$this->username.'.jpg';
 	}
 
-	public function profile_url()
+	public function admin_url()
 	{
 		return 'admin/users/profile/'.$this->id;
 	}

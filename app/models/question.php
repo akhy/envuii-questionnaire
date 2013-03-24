@@ -25,7 +25,7 @@ class Question extends DataMapper {
 
 	public function group()
 	{
-		return Group::one($this->group_id)->get();
+		return Group::one($this->group_id);
 	}
 
 	public function answers_all()

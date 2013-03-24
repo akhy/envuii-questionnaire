@@ -27,7 +27,7 @@
 	<tr class="{{ class }}">
 
 		<td> {{ user.username }} </td> 
-		<td> {{ user.name }} </td>
+		<td> {{ anchor(user.admin_url(), user.name) }} </td>
 		<td> {{ user.created_at }} </td>
 		<td> {{ user.has_bio()|yesno}} </td>
 		<td> {{ false|yesno}} </td>
@@ -36,7 +36,8 @@
 		<td> {{ false|yesno}} </td>
 		
 		<td>
-			<a href="" class="btn btn-mini">Lihat Profil</a>
+			{{ anchor(user.admin_url(), 'Lihat Profil &raquo;', 'class="btn btn-primary btn-mini"') }}
+
 			{% if not user.verified %}
 
 			{{ anchor('admin/users/approve/' ~ user.id, '&check; Approve', 'class="btn btn-mini btn-success"') }}

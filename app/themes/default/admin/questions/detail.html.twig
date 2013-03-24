@@ -50,7 +50,7 @@
 		<ol>
 			{% for answer in question.answers_all().get() %}
 				<li>
-					<strong>{{ anchor(answer.user().profile_url(), answer.user().name) }}</strong>:
+					<strong>{{ anchor(answer.user().admin_url(), answer.user().name) }}</strong>:
 					{{ answer.fill }}
 
 				</li>
