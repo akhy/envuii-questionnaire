@@ -14,7 +14,9 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+@$base_url = include(APPPATH.'../base_url.php');
+
+$config['base_url']	= $base_url ? $base_url : '' ;
 
 /*
 |--------------------------------------------------------------------------
