@@ -1,14 +1,18 @@
 <!doctype html>
 <html>
 <head>
-	<title>Public</title>
-	{{ css('lib/bootstrap/css/bootstrap.min.css') }}
+	<title>{{ title }}</title>
+	{{ css('lib/bootstrap/css/bootstrap.journal.min.css') }}
+	{{ css('lib/bootstrap/css/bootstrap-responsive.min.css') }}
+	{{ css('lib/elusive/css/elusive-webfont.css') }}
 	{{ less('less/public.less') }}
 	{{ js('js/less.js') }}
+	{% for style in styles %}
+	    {{ css(style) }}
+	{% endfor %}
 </head>
 <body>
-
-	<div class="container">
+	<div class="container container-fluid">
 		<div class="row">
 			<div class="span2">
 				{% if current %}
@@ -19,21 +23,20 @@
 				<div>
 					{{ anchor('users/logout', 'Logout') }}
 				</div>
+				{% include '_parts/sidebar.html.twig' %}
 				{% endif %}
 			</div>
 			<div class="span10">
 				<div class="page-header">
-					<h4>
+					<h3>
+						{{ img({'src': 'img/uii.jpg', 'width': '50'}) }}
+						&nbsp; &nbsp; 
 						Tracer Study - Environmental Engineering UII
-					</h4>
+					</h3>
 				</div>
 
-				{% for name,val in alerts %}
-					{% if val != '' %}
-				    <div class="alert alert-{{ name }}">
-				    	{{ val }}
-				    </div>
-					{% endif %}
+				{% for type,alert in alerts %}
+					<div class="alert alert-{{ type }}">{{ alert }}</div>
 				{% endfor %}
 
 				{% block content %}{% endblock %}
@@ -49,6 +52,19 @@
 
 	<!-- SCRIPTS -->
 	{{ js('lib/jquery/jquery-1.7.1.min.js') }}
+	{{ js('lib/jquery/jquery.form.js') }}
 	{{ js('lib/bootstrap/js/bootstrap.min.js') }}
+
+	{% for script in scripts %}
+	    {{ js(script) }}
+	{% endfor %}
+
+	<script type="text/javascript">
+		$(function(){
+			$('#{{ active }}').addClass('active');
+		});
+	</script>
+
+	{% block scripts %}{% endblock %}
 </body>
 </html>

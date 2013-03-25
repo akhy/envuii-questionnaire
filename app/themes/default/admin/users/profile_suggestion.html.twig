@@ -1,0 +1,5 @@
+{% if user.has_suggestion() %}
+	<p>{{ user.suggestion().content }}</p>
+{% else %}
+	<div class="alert">Belum mengisi kritik dan saran.</div>
+{% endif %}

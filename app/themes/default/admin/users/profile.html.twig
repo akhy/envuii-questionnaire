@@ -1,0 +1,41 @@
+{% extends _layout %}
+
+{% block content %}
+	<h4>{{ user.name }}</h4>
+
+	<div class="row">
+		<div class="span10">
+			<h5>Profil</h5>
+			<table class="table table-condensed">
+				{% for key,value in user.get_bio(true) %}
+					<tr>
+						<td>{{ key }}</td>
+						<td>{{ value }}</td>
+						<td></td>
+					</tr>
+				{% else %}
+					<div class="alert">Belum mengisi profil</div>
+				{% endfor %}
+			</table>
+
+
+			<h5> Tracer Study </h5>
+			{% include 'admin/users/profile_tracer.html.twig' %}
+
+			<h5> Kompetensi </h5>
+			{% include 'admin/users/profile_competences.html.twig' %}
+
+			<h5> Kritik dan Saran</h5>
+			{% include 'admin/users/profile_suggestion.html.twig' %}
+
+			<h5> Rekomendasi </h5>
+			{% include 'admin/users/profile_recommendations.html.twig' %}
+
+		</div>
+
+		<div class="span2">
+			{{ img(user.photo_url()) }}
+		</div>
+	</div>
+
+{% endblock %}

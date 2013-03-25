@@ -1,0 +1,58 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<form action="{{ site_url('users/register_manual') }}" method="post" class="form">
+
+		<div class="row">
+
+			<div class="span5">
+				<h3>Registrasi Manual</h3>
+				<label>NIM</label>
+				<input type="text" name="username" placeholder="Misal: 08523108" />
+
+				<label>Nama Lengkap</label>
+				<input type="text" name="name" placeholder=""/>
+
+				<label>Password</label>
+				<input type="password" name="password" placeholder="Password" noautofill />
+
+				<label>Ulangi Password Anda</label>
+				<input type="password" name="confirm" placeholder="Password" />
+
+				<label class="checkbox">
+					<input type="checkbox" name="agree" value="agree">
+					Dengan menekan tombol submit saya menyatakan bahwa saya adalah 
+					alumni Teknik Lingkungan UII dan data yang saya isikan adalah benar.
+				</label>
+
+				<div class="clearfix"></div>
+				<input type="submit" value="Register" class="btn btn-primary">
+					
+				{{ anchor('users/register', 'Tidak bisa login?') }}
+			</div>
+
+			<div class="span5">
+				<div class="alert alert-info">
+					<p>
+					<strong>INFO</strong> 
+					Form registrasi manual ini diperuntukkan bagi anda yang kesulitan
+					dengan {{ anchor('users/register', 'REGISTRASI VIA UNISYS') }}.
+					</p>
+					<p>
+					Anda dapat langsung mengisi tracer study setelah melengkapi
+					formulir di samping. Namun bagaimanapun admin tetap memiliki
+					wewenang untuk menghapus data anda bila ternyata data yang anda 
+					masukkan tidak valid.
+					</p>
+				</div>
+			</div>
+
+
+		</div>
+		
+
+	</form>
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends _layout %}
+
+{% block content %}
+
+	<h3>Kompetensi Alumni</h3>
+
+	{% if count(competences) > 0 %}
+	<div class="alert alert-info">
+		Rata-rata di bawah berdasarkan perhitungan dari <strong>
+		{{ competences[0].cnt_user }} orang alumni</strong> 
+		yang mengisi form kompetensi.
+	</div>
+	{% else %}
+	    <em>Belum ada alumni yang mengisi form kompetensi alumni</em>
+	{% endif %}
+
+	<table class="table table-condensed table-striped">
+		<thead>
+			<tr>
+				<th>Pernyataan</th>
+				<th>Rata-rata Level Kompetensi</th>
+				<th>Rata-rata Kontribusi Kampus</th>
+				<th></th>
+			</tr>
+		</thead>
+	{% for competence in competences %}
+		<tr>
+			<td>{{ competence.statement }}</td>
+			<td>{{ competence.avg_level }}/5</td>
+			<td>{{ competence.avg_contribution }}/5</td>
+			<td></td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}

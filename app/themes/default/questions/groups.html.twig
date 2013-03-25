@@ -1,0 +1,30 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<div class="well">
+		Sebelum mengisi form tracer study, silakan pilih salah satu pilihan di bawah yang sesuai dengan kondisi anda <strong>setelah lulus dari Teknik Lingkungan Universitas Islam Indonesia</strong>
+	</div>
+
+	<div class="row">
+	{% for group in groups %}
+		<div class="span4 offset3">
+	    {{ anchor('questions/select/' ~ group.id, group.description, 'class="btn input-block-level confirm"') }}
+		<div>&nbsp;</div>
+		</div>
+	{% endfor %}
+	</div>
+	<hr>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+
+	$(function(){
+		$('.confirm').click(function(){
+			return confirm('Anda yakin?');
+		})
+	});
+
+	</script>
+{% endblock %}

@@ -2,19 +2,33 @@
 
 class User extends DataMapper {
 
+	static $current = false;
+
 	public static function init()
 	{
 		return new User;
+	}
+
+	public static function one($id)
+	{
+		return User::init()->where('id', $id)->limit(1)->get();
 	}
 
 	public static function current()
 	{
 		$CI =& get_instance();
 
-		return User::init()
+		if (User::$current !== false)
+			return User::$current;
+
+		$user = User::init()
 			->where('username', $CI->session->userdata('username'))
 			->get()
 			;
+
+		User::$current = $user;
+
+		return $user->exists() ? $user : null;
 	}
 
 	public static function auth($username, $password)
@@ -32,20 +46,26 @@ class User extends DataMapper {
 			return $user;
 		}
 
+		return false;
+	}
+
+	public static function auth_unisys($username, $password)
+	{
+		$CI =& get_instance();
+
 		$username = $CI->unisys->auth($username, $password);
 		if ($username)
 		{
-			
-			$CI->session->set_userdata('username', $username);
 			$data = $CI->unisys->data();
 			$photo_path = realpath(APPPATH).'/../photo/'.$CI->unisys->username.'.jpg';
 			$CI->unisys->fetch_photo($photo_path);
 
-			$user = User::upsert(array(
+			$user = array(
 				'username' => $username,
 				'password' => base64_encode($password),
 				'name'     => $data['name'],
-				));
+				'verified' => true,
+				);
 
 			return $user;
 		}
@@ -65,8 +85,234 @@ class User extends DataMapper {
 		return $user;
 	}
 
+	public function purge()
+	{
+		Answer::init()->where('user_id', $this->id)->get()->delete_all();
+		Suggestion::init()->where('user_id', $this->id)->get()->delete_all();
+		Recommendation::init()->where('user_id', $this->id)->get()->delete_all();
+		$this->db->query("DELETE FROM user_competence WHERE user_id={$this->id}");
+		$this->db->query("DELETE FROM user_bio WHERE user_id={$this->id}");
+
+		return $this->delete();
+	}
+
 	public function photo_url()
 	{
 		return 'photo/'.$this->username.'.jpg';
 	}
+
+	public function admin_url()
+	{
+		return 'admin/users/profile/'.$this->id;
+	}
+
+	public function has_suggestion()
+	{
+		return $this->suggestion()->exists();
+	}
+
+	public function suggestion()
+	{
+		return Suggestion::init()->where('user_id', $this->id)->get();
+	}
+
+	public function has_recommendations()
+	{
+		return $this->recommendations()->exists();
+	}
+
+	public function recommendations()
+	{
+		return Recommendation::init()->where('user_id', $this->id)->get();
+	}
+
+	public function recommendations_count()
+	{
+		return Recommendation::init()->where('user_id', $this->id)->count();
+	}
+
+	public function answered_questions()
+	{
+		$rows = Answer::init()
+			->where('user_id', $this->id)
+			->group_by('question_id')
+			->get();
+
+		$questions = array();
+		foreach ($rows as $row) {
+			$questions[] = Question::one($row->question_id);
+		}
+		
+		return $questions;
+	}
+
+	public function is_complete_answers()
+	{
+		$questions_count = $this->group()->questions()->get()->result_count();
+		$answered_count = count($this->answered_questions());
+
+		return $answered_count >= $questions_count;
+	}
+
+	public function has_competences()
+	{
+		$CI =& get_instance();
+
+		$tmp = $CI->db->query(
+			"SELECT * FROM user_competence 
+			 WHERE user_id = {$this->id}
+			 LIMIT 1
+			")->row(); 
+
+		return (is_object($tmp));
+	}
+
+	public function reset_competences()
+	{
+		$CI =& get_instance();
+		
+		return $CI->db->query(
+			"DELETE FROM user_competence 
+			 WHERE user_id = {$this->id}"
+			);
+	}
+
+	public function competences()
+	{
+		$CI =& get_instance();
+
+		return $CI->db->query(
+			"SELECT `uc`.`user_id` AS `user_id`,`uc`.`competence_id` AS `competence_id`,`uc`.`level` AS `level`,`uc`.`contribution` AS `contribution`,`c`.`statement` AS `statement` from (`user_competence` `uc` left join `competences` `c` on((`uc`.`competence_id` = `c`.`id`)))
+			 WHERE uc.user_id = {$this->id}"
+			)->result();
+	}
+
+	public function has_bio()
+	{
+		return sizeof($this->get_bio()) > 0;
+	}
+
+	public function get_bio($nice = false)
+	{
+		$CI =& get_instance();
+
+		$user_id = $this->id;
+
+		$raw = $CI->db->query(
+			"SELECT `key`, `value`, `nicename` FROM user_bio WHERE user_id = $user_id"
+			)->result(); 
+
+		$index = $nice ? 'nicename' : 'key';
+		$result = array();
+		foreach ($raw as $record)
+			$result[$record->$index] = $record->value;
+
+		return $result;
+	}
+
+	public function set_bio($array)
+	{
+		$this->bio = $array;
+	}
+
+	public function save_bio($array)
+	{
+		$CI =& get_instance();
+
+		$this->set_bio($array);
+
+		if($this->invalid_bio())
+			return false;
+
+		foreach($this->bio_validation['sanitized'] as $key => $value)
+		{
+			$user_id = User::current()->id;
+
+			$check = $CI->db
+				->where('user_id', $user_id)
+				->where('key', $key)
+				->from('user_bio')
+				->get()->row();
+
+			if(is_object($check))
+			{
+				$CI->db
+					->where('user_id', $user_id)
+					->where('key', $key)
+					->update('user_bio', array(
+						'value'   => $value,
+						)
+					);
+				continue;
+			}
+
+			$CI->db->insert('user_bio', 
+				array(
+					'user_id' => $user_id,
+					'key'     => $key,
+					'nicename'=> User::nicename($key),
+					'value'   => $value,
+					)
+				);
+		}
+	}
+
+	public function invalid_bio()
+	{
+		$validation = $this->validate_bio();
+
+		return sizeof($validation['errors']) > 0; 
+	}
+
+	public function validate_bio()
+	{
+		$CI =& get_instance();
+		$CI->load->library('validation');
+
+		// Validate 
+		$val = new validation;
+		$val->addSource($this->bio);
+
+		$val->addRule('gender', 'string', true, 1, 20)
+			->addRule('email', 'email', true)
+			->addRule('year_entry', 'numeric', true, 1990, date('Y'))
+			->addRule('year_graduate', 'numeric', true, 1990, date('Y'))
+			->addRule('priority', 'numeric', true, 1, 3)
+			->addRule('current_address', 'string', true, 5, 500)
+			->addRule('contact_number', 'string', true, 5, 15)
+			->addRule('socmed_facebook', 'url', false)
+			->addRule('socmed_twitter', 'string', false, 4, 30)
+			;
+
+		$val->run();
+
+
+		return $this->bio_validation = array(
+			'errors' => $val->errors,
+			'sanitized' => $val->sanitized,
+			);
+	}
+
+	public static function nicename($key)
+	{
+		$hashmap = array(
+			'gender'          => 'Jenis Kelamin',
+			'email'           => 'E-mail',
+			'year_entry'      => 'Tahun Masuk',
+			'year_graduate'   => 'Tahun Lulus',
+			'priority'        => 'Prioritas Masuk JTL',
+			'current_address' => 'Alamat Sekarang',
+			'contact_number'  => 'Nomor Telepon/HP',
+			'socmed_facebook' => 'Facebook',
+			'socmed_twitter'  => 'Twitter',
+			);
+
+		return $hashmap[$key];
+	}
+
+	public function group()
+	{
+		return Group::init()->where('id', $this->group_id)->get();
+	}
+
 }

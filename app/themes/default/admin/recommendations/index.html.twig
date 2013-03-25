@@ -1,0 +1,35 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h3>Rekomendasi</h3>
+
+<table class="table">
+	<tr>
+		<th>#</th>
+		<th>Nama</th>
+		<th>Angkatan</th>
+		<th>Alamat</th>
+		<th>Kontak</th>
+		<th>Direkomendasikan oleh</th>
+		<th></th>
+	</tr>
+	{% set c = 1 %}
+	{% for recommendation in recommendations %}
+	<tr>
+		<td>{{ c }}</td>
+		<td>{{ recommendation.name }}</td>
+		<td>{{ recommendation.classyear }}</td>
+		<td>{{ recommendation.address }}</td>
+		<td>{{ recommendation.contact }}</td>
+		{% set user = recommendation.user() %}
+		<td>{{ anchor(user.admin_url(), user.name) }}</td>
+		<td></td>
+		{% set c = c+1 %}
+	</tr>
+	{% else %}
+	    <div class="alert-info">Belum ada rekomendasi</div>
+	{% endfor %}
+</table>
+
+{% endblock %}

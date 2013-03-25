@@ -1,0 +1,71 @@
+{% extends _layout %}
+
+{% block content %}
+
+{# Fill Type #}
+
+<form action="{{ site_url('admin/questions/add') }}" method="post">
+
+<legend>Tambah Pertanyaan Baru pada Group "{{ group.description }}"</legend>
+
+<input type="hidden" name="group_id" value="{{ group.id }}">
+
+<label>Pertanyaan</label>
+<input name="title" type="text" class="span5">
+
+<label>Deskripsi</label>
+<textarea class="span5" name="meta[description]"></textarea>
+
+{% if type == 'fill' %}
+
+	<input type="hidden" name="meta_table" value="fill">
+
+	<label>Ukuran Form Isian</label>
+	<label class="radio">
+		<input type="radio" name="meta[input_type]" value="string">
+		Text (Untuk isian singkat)
+	</label>
+	<label class="radio">
+		<input type="radio" name="meta[input_type]" value="textarea">
+		Textarea (Untuk isian yang cukup panjang)
+	</label>
+
+{% elseif type == 'choose' %}
+
+	<input type="hidden" name="meta_table" value="choose">
+	
+	<label>Pilihan</label>
+	<ol type="a">
+	{% for i in range(1,5) %}
+	<li>
+	    <input name="meta[choices][]" type="text">
+	</li>
+	{% endfor %}
+	</ol>
+	<a>+ Tambah jumlah pilihan</a>
+
+	
+	<label class="checkbox">
+		<input type="checkbox" name="meta[multi_answers]" value="1">
+		Boleh memilih lebih dari satu jawaban (multiple-answer)
+	</label>
+
+	<label class="checkbox">
+		<input type="checkbox" name="meta[allow_fill]" value="1">
+		Tambahkan pilihan <em>"Lainnya, sebutkan..."</em> 
+		(user dapat mengisikan jawaban selain yang tersedia pada pilihan)
+	</label>
+
+
+{% endif %}
+
+<hr>
+
+<div>
+	<input type="submit" value="Submit" class="btn btn-primary">
+	<input type="reset" value="Reset" class="btn">
+</div>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% for recommendation in user.recommendations() %}
+	<dl class="dl-horizontal">
+		<dt>Nama</dt>
+		<dd>{{ recommendation.name }}</dd>
+
+		<dt>Angkatan</dt>
+		<dd>{{ recommendation.classyear }}</dd>
+
+		<dt>Alamat</dt>
+		<dd>{{ recommendation.address }}</dd>
+
+		<dt>Kontak</dt>
+		<dd>{{ recommendation.contact }}</dd>
+
+	</dl>
+{% else %}
+	<div class="alert">Belum mengisi form rekomendasi</div>
+{% endfor %}

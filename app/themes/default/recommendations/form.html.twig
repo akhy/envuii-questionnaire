@@ -1,0 +1,48 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h4>Form 5: Rekomendasi</h4>
+
+<blockquote>
+	<p>
+	Rekomendasikan minimal 3 teman anda, alumni Jurusan Teknik Lingkungan UII 
+	untuk turut berpartisipasi mengisi penelusuran studi ini. 
+
+	Anda telah merekomendasikan {{ current.recommendations_count() }} orang 
+	{{ anchor('recommendations/view', '(lihat di sini)') }}
+	.
+	</p>
+</blockquote>
+
+
+
+<form action="{{ site_url('recommendations/form') }}" method="post" class="form">
+	<label>Nama</label>
+	<input type="text" name="name">
+
+	<label>Angkatan</label>
+	<input type="text" name="classyear">
+
+	<label>Alamat</label>
+	<textarea name="address"></textarea>
+
+	<label>Kontak</label>
+	<textarea name="contact"></textarea>
+	<br>
+	<small>Sebutkan nomor handphone atau link social media yang bersangkutan
+		yang dapat dihubungi</small>
+
+	<hr>
+
+	<input type="submit" value="Submit" class="btn btn-primary">
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(function(){
+	$('textarea').redactor();
+})
+</script>	
+{% endblock %}

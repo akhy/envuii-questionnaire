@@ -2,29 +2,33 @@
 
 {% block content %}
 	
-	<div class="alert">
-		Silakan klik pertanyaan untuk mengisi kuesioner ini.
-	</div>
-	
-	<table class="table table-striped">
-		<tbody>
-		{% for question in questions.get() %}
-		<tr>
-			<td>{{ question.id }}.</td>
-			<td>
-			</td>
-			<td>
-				{{ anchor(question.url, question.description) }}
-			</td>
-			<td>
-				<span class="label label-success">
-				&check;
-				</span>		
-				<button class="btn btn-mini">Ubah jawaban</button>
-			</td>		
-		</tr>
-		{% endfor %}
-		</tbody>
-	</table>
+	<h4>Form 2: Tracer Study</h4>
 
+	<h5>{{ group.description }}</h5>	
+	<ol>
+	{% for question in group.questions().get() %}
+		<li>
+			{% if question.answers().exists() %}
+				&check;
+			{% else %}
+				&cross;
+			{% endif %}
+
+			{% if question.meta().description %}
+				{{ anchor(question.url, question.meta().description) }}
+			{% else %}
+				{{ anchor(question.url, question.title) }}
+			{% endif %}
+
+		</li>
+	{% endfor %}
+	</ol>
+
+	<div class="alert alert-info">
+		<p>
+		<strong>Terima kasih</strong> telah mengisi form tracer study, silakan melanjutkan ke form kompetensi alumni.
+		</p>
+
+		{{ anchor('competences', 'Lanjutkan  ke Form 3 &raquo;', 'class="btn"') }} 
+	</div>
 {% endblock %}

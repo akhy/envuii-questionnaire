@@ -1,0 +1,19 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h4>Form 4: Kritik dan Saran</h4>
+
+<h5>Anda menulis:</h5>
+<blockquote>
+	{{ suggestion.content }}
+</blockquote>
+
+<div class="alert alert-info">
+	<p>
+	Terima kasih atas saran dan kritik anda, silakan isi form rekomendasi.
+	</p>
+
+	{{ anchor('recommendations', 'Lanjutkan ke Form 5 &raquo;', 'class="btn"') }} 
+</div>
+{% endblock %}

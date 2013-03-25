@@ -1,0 +1,22 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h4>Form 4: Kritik dan Saran</h4>
+
+<form action="{{ site_url('suggestions/form') }}" method="post" class="form">
+	<label for="content">Kritik dan Saran untuk Teknik Lingkungan UII</label>
+	<textarea class="textarea" name="content"></textarea>
+	<hr>
+	<input type="submit" value="Kirim" class="btn btn-primary">
+	<input type="reset" value="Reset" class="btn">
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(function(){
+	$('textarea').redactor();
+})
+</script>	
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<div class="pull-right">
+
+		<div class="btn-group">
+			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+			<i class="icon-plus-sign"></i> Tambah Pertanyaan Baru
+			<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu pull-right">
+				<li> {{ anchor('admin/questions/add?type=fill&group_id=' ~ group.id, 'Isian') }} </li>
+				<li> {{ anchor('admin/questions/add?type=choose&group_id=' ~ group.id, 'Multiple-choice') }} </li>
+			</ul>
+		</div>
+	
+	</div>
+	<h3>Group: {{ group.description }}</h3>
+
+	<table class="table table-condensed table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Pertanyaan</th>
+				<th>Tipe</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for question in questions %}
+			<tr>
+				<td>{{ question.order }}</td>
+				<td>{{ anchor(question.admin_url(), question.title) }}
+					<br>
+					<small>
+						<em>
+							{{ question.meta().description|word_limiter(8) }}
+						</em>
+					</small>
+				</td>
+				<td>
+					<small>
+					{% if question.meta_table == 'fill' %}
+					isian	
+					{% elseif question.meta_table == 'choose' %}
+					multiple-choice
+						{% if question.meta().multi_answers %}
+						+ multiple-answer
+						{% endif %}
+					{% endif %}
+					</small>
+				</td>
+				<td>
+					<div class="btn-group">
+					{{ anchor('admin/questions/edit/' ~ question.id, 'edit', 'class="btn btn-mini"') }}
+					{{ anchor('admin/questions/delete/' ~ question.id, 'delete', 'class="btn btn-mini delete"') }}
+					</div>
+					{{ anchor('admin/questions/detail/' ~ question.id, 'detail &raquo;', 'class="btn btn-mini btn-primary"') }}
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

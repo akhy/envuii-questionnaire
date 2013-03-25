@@ -1,0 +1,62 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<h4>Pertanyaan</h4>
+
+	<h5>{{ question.title }}</h5>
+	<p>Deskripsi: <em>{{ question.meta().description|default('n/a') }}</em></p>
+
+	{% if question.meta_table == 'choose' %}
+		
+		<p> Tipe pertanyaan: 
+			<span class="label">multiple-choice</span> 
+			{% if question.meta().multi_answers %}
+				<span class="label">multiple-answers</span>
+			{% endif %}
+			{% if question.meta().allow_fill %}
+				<span class="label">allow custom answers</span>
+			{% endif %}
+		</p>
+
+		Jawaban:
+		<ol>
+		{% for choice in question.meta().choices() %}
+			<li>
+		    {{ choice.text }}: 
+		    <strong>
+		    	{{ choice.answers().count()}} orang
+		    </strong>
+			</li>
+		{% endfor %}
+		</ol>
+
+		Jawaban lain-lain:
+		<ol>
+		{% for answer in question.answers_all().where('choice_id', 0).get() %}
+		    <li>
+		    	{{ answer.fill }}
+		    </li>
+		{% else %}
+			<em>tidak ada</em>
+		{% endfor %}
+		</ol>
+
+	{% elseif question.meta_table == 'fill' %}
+
+		<p> Tipe pertanyaan: <span class="label">isian</span> </p>
+
+		Jawaban:
+		<ol>
+			{% for answer in question.answers_all().get() %}
+				<li>
+					<strong>{{ anchor(answer.user().admin_url(), answer.user().name) }}</strong>:
+					{{ answer.fill }}
+
+				</li>
+			{% else %}
+			    <em>Belum yang menjawab pertanyaan ini.</em>
+			{% endfor %}
+		</ol>
+	{% endif %}
+{% endblock %}

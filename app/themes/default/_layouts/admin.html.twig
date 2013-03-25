@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	{{ css('lib/bootstrap/css/bootstrap.min.css') }}
+	{{ css('lib/bootstrap/css/bootstrap-responsive.min.css') }}
+	{{ css('lib/elusive/css/elusive-webfont.css') }}
+	{{ less('less/public.less') }}
+	{{ js('js/less.js') }}
+	{% for style in styles %}
+	    {{ css(style) }}
+	{% endfor %}
+</head>
+<body>
+	<div class="container container-fluid">
+		<div class="row">
+			<div class="span12">
+				<div class="page-header">
+					<h3>
+						{{ img({'src': 'img/uii.jpg', 'width': '50'}) }}
+						&nbsp; &nbsp; 
+						Tracer Study - Environmental Engineering UII
+					</h3>
+				</div>
+
+				<ul class="nav nav-tabs">
+					<li id="users">{{ anchor('admin/users', 'Alumni') }}</li>
+					<li id="questions">{{ anchor('admin/groups', 'Tracer Study') }}</li>
+					<li id="competences">{{ anchor('admin/competences', 'Kompetensi Alumni') }}</li>
+					<li id="suggestions">{{ anchor('admin/suggestions', 'Kritik dan Saran') }}</li>
+					<li id="recommendations">{{ anchor('admin/recommendations', 'Rekomendasi') }}</li>
+				</ul>
+
+				<ul class="breadcrumb">
+					<li>{{ anchor('#', 'Home') }} <span class="divider">&raquo;</spa</li>
+					{% for key,breadcrumb in breadcrumbs %}
+						{% if key == count(breadcrumbs) - 1 %}
+					  	<li class="active">{{ breadcrumb|striptags }}</li>
+					  {% else %}
+					    <li>
+					    {{ breadcrumb }} <span class="divider">&raquo;</span>
+					    </li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+
+				{% for type,alert in alerts %}
+					<div class="alert alert-{{ type }}">{{ alert }}</div>
+				{% endfor %}
+
+				{% block content %}{% endblock %}
+
+				<div id="footer">
+					Copyright © 2013 Environment Engineering Department - Islamic University of Indonesia 
+					<br>
+					Tel. +62274 896440 ext. 3210 | Fax. +62274 895330 | Email : lingkungan@uii.ac.id
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- SCRIPTS -->
+	{{ js('lib/jquery/jquery-1.7.1.min.js') }}
+	{{ js('lib/jquery/jquery.form.js') }}
+	{{ js('lib/bootstrap/js/bootstrap.min.js') }}
+
+	{% for script in scripts %}
+	    {{ js(script) }}
+	{% endfor %}
+
+	<script type="text/javascript">
+		$(function(){
+			$('#{{ active }}').addClass('active');
+			$('.breadcrumb li:last-child').addClass('active');
+			$('.delete').click(function(){
+				return confirm('Anda yakin ingin menghapus data ini?');
+			});
+		});
+	</script>
+
+	{% block scripts %}{% endblock %}
+</body>
+</html>

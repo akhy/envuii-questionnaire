@@ -1,0 +1,33 @@
+{% if not user.has_competences() %}
+	<div class="alert">Belum mengisi form kompetensi</div>
+{% else %}
+	<table class="table table-condensed table-striped">
+		<thead>
+		<tr>
+			<th>Pernyataan</th>
+			<th>Level Kompetensi</th>
+			<th>Kontribusi Kampus</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+	{% for competence in user.competences() %}
+		<tr>
+			<td>{{ competence.statement }}</td>
+			<td>{{ competence.level }}</td>
+			<td>{{ competence.contribution }}</td>
+			<td>
+				{% set delta = competence.contribution - competence.level %}
+				{% if delta > 0 %}
+						<span class="badge badge-success">+{{ delta }}</span>
+				{% elseif delta < 0 %}
+						<span class="badge badge-important">{{ delta }}</span>
+				{% else %}
+						<span class="badge">+0</span>
+				{% endif %}
+			</td>
+		</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+{% endif %}

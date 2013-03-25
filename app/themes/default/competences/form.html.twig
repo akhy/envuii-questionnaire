@@ -1,0 +1,81 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h4>Form 3: Kompetensi Alumni</h4>
+
+<div class="alert alert-info">
+	<p>
+		 Isilah form di bawah dengan skala 1-5. 1 = Sangat rendah, 5 = Sangat tinggi
+	</p>
+
+	<p>
+		<strong>Level kompetensi:</strong> 
+		Pada saat lulus, pada tingkat mana kompetensi di bawah ini anda kuasai? 
+	</p>
+	<p>
+		<strong>Kontribusi Kampus:</strong> 
+		Pada saat lulus, bagaimana kontribusi perguruan tinggi dalam hal kompetensi di bawah ini?
+	</p>
+</div>
+
+<form id="form" action="{{ site_url('competences/form') }}" method="post">
+	<table class="table table-striped table-condensed">
+		<thead>
+			<tr>
+				<th colspan="5">Level Kompetensi</th>
+				<th rowspan="2">Pernyataan</th>
+				<th colspan="5">Kontribusi Kampus</th>
+			</tr>
+			<tr>
+				<th>1</th> <th>2</th> <th>3</th> <th>4</th> <th>5</th>
+				<th>1</th> <th>2</th> <th>3</th> <th>4</th> <th>5</th>
+			</tr>
+
+		</thead>
+		<tbody>
+		{% for competence in competences.get() %}
+		<tr>
+			{% for i in range(1,5) %}
+			<td class="field">
+			    <input name="answer[{{ competence.id }}][level]" value="{{ i }}" required type="radio" 
+			    class="c{{competence.id}}" />
+			</td>
+			{% endfor %}
+			<td>{{ competence.statement }}</td>
+		
+			{% for i in range(1,5) %}
+			<td class="field">
+			    <input name="answer[{{ competence.id }}][contribution]" value="{{ i }}" required type="radio"
+			    class="c{{competence.id}}"/>
+			</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<input type="submit" value="Submit" class="btn btn-primary"/>
+	<input type="reset" value="Reset" class="btn "/>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	$(function(){
+		$('form').submit(function(){
+
+			var data = $('#form').formToArray().length;
+			var field = $('td.field').length / 5;
+			if(data < field)
+			{
+				alert('Lengkapi form dan klik submit.');	
+				return false;
+			}
+
+			return true;
+		});
+	});
+</script>
+{% endblock %}

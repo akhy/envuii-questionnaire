@@ -1,0 +1,53 @@
+{% extends _layout %}
+
+{% block content %}
+
+<h3>Manajemen Alumni</h3>
+
+
+<table class="table">
+	<tr>
+		<th>NIM</th>
+		<th>Nama Lengkap</th>
+		<th>Tanggal Registrasi</th>
+		<th>Form 1</th>
+		<th>Form 2</th>
+		<th>Form 3</th>
+		<th>Form 4</th>
+		<th>Form 5</th>
+		<th></th>
+	</tr>
+{% for user in users %}
+	
+	{% if user.verified == 0 %}
+		{% set class = 'error' %}
+	{% else %}
+		{% set class = '' %}
+	{% endif %}
+
+	<tr class="{{ class }}">
+
+		<td> {{ user.username }} </td> 
+		<td> {{ anchor(user.admin_url(), user.name) }} </td>
+		<td> {{ user.created_at }} </td>
+		<td> {{ user.has_bio()|yesno}} </td>
+		<td> {{ user.is_complete_answers()|yesno}} </td>
+		<td> {{ user.has_competences()|yesno}} </td>
+		<td> {{ user.has_suggestion()|yesno}} </td>
+		<td> {{ user.has_recommendations()|yesno}} </td>
+		
+		<td>
+			{{ anchor(user.admin_url(), 'Lihat Profil &raquo;', 'class="btn btn-primary btn-mini"') }}
+
+			{% if not user.verified %}
+
+			{{ anchor('admin/users/approve/' ~ user.id, '&check; Approve', 'class="btn btn-mini btn-success"') }}
+			{{ anchor('admin/users/delete/' ~ user.id, '&cross; Delete User', 'class="btn btn-mini btn-danger"') }}
+
+			{% endif %}
+		</td>
+	</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

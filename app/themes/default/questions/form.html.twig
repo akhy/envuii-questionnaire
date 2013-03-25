@@ -1,0 +1,37 @@
+{% extends _layout %}
+
+{% block content %}
+
+	<div class="page-header">
+		<h5>Pertanyaan ke {{ question.order }} dari {{ question.siblings().result_count() }}</h5>
+		<h3>{{ question.title }}</h3>
+	</div>
+	<p>{{ question.meta().description }}</p>
+
+	<form action="{{ site_url('questions/answer/' ~ question.meta_table ~ '/' ~ question.id) }}" method="post">
+		{% include 'questions/form_' ~ question.meta_table ~ '.html.twig' %}
+		{% if question.answers().exists() %}
+			<span class="badge badge-success">
+				&check; Anda sudah mengisi pertanyaan ini.
+			</span>
+		{% endif %}
+		<hr>
+		<div class="btn-group">
+			{% if question.prev().exists() %}
+				{{ anchor(question.prev().url(), '&laquo; Pertanyaan sebelumnya', 'class="btn"') }}
+			{% endif %}
+
+			{% if question.answers().exists() %}
+				{% if question.next().exists() %}
+					{{ anchor(question.next().url(), 'Pertanyaan selanjutnya &raquo;', 'class="btn"') }}
+				{% endif %}
+			{% else %}
+				<input type="submit" value="Simpan dan lanjutkan &raquo;" 
+					class="btn btn-primary">
+			{% endif %}
+		</div>
+	</form>
+
+	<hr>
+
+{% endblock %}
