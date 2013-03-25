@@ -18,7 +18,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+	require_once('environment.php');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -32,12 +32,12 @@ if (defined('ENVIRONMENT'))
 {
 	switch (ENVIRONMENT)
 	{
-		case 'development':
+		case 'dev':
 			error_reporting(E_ALL);
 		break;
 	
-		case 'testing':
-		case 'production':
+		case 'test':
+		case 'prod':
 			error_reporting(0);
 		break;
 

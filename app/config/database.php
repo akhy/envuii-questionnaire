@@ -2,24 +2,19 @@
 
 
 
-$active_group = 'default';
+$dbpath = APPPATH.'config/db/'.ENVIRONMENT.'.php';
+
+if( ! is_file($dbpath) )
+	exit("Database configuration is not exist. Please check file <strong>`$dbpath`</strong>");
+else
+	$conn = include ($dbpath);
+
+
+$active_group = 'env_alumni';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = 'root';
-$db['default']['database'] = 'env_alumni';
-$db['default']['dbdriver'] = 'mysql';
-$db['default']['dbprefix'] = '';
-$db['default']['pconnect'] = TRUE;
-$db['default']['db_debug'] = TRUE;
-$db['default']['cache_on'] = FALSE;
-$db['default']['cachedir'] = '';
-$db['default']['char_set'] = 'utf8';
-$db['default']['dbcollat'] = 'utf8_general_ci';
-$db['default']['swap_pre'] = '';
-$db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+$db = $conn;
+
 
 
 /* End of file database.php */
