@@ -15,7 +15,7 @@ class Auth extends MY_Controller {
 		$post = $this->input->post();
 
 		if(strtolower($post['username']) == 'admin' 
-			AND $post['password'] == 'InsyaAllahAman!')
+			AND md5($post['password']) == Config::get('passhash'))
 		{
 			$this->session->set_userdata('is_admin', true);
 
