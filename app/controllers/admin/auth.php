@@ -2,9 +2,9 @@
 
 class Auth extends MY_Controller {
 
-	public function get_index()
+	public function get_login()
 	{
-		$this->session->sess_destroy();
+		$this->session->unset_userdata('is_admin');
 
 		$this->view('admin/auth/login')
 			->display();
@@ -34,6 +34,6 @@ class Auth extends MY_Controller {
 		$this->session->sess_destroy();
 
 		Alert::push('info', 'Anda telah keluar dari sistem.');
-		redirect('admin/auth');
+		redirect('admin/auth/login');
 	}
 }
