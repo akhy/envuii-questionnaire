@@ -111,6 +111,19 @@ class User extends DataMapper {
 		return 'admin/users/profile/'.$this->id;
 	}
 
+	public function progress()
+	{
+		$progress = 0;
+		
+		if($this->has_suggestion()) $progress++;
+		if($this->has_recommendations()) $progress++;
+		if($this->is_complete_answers()) $progress++;
+		if($this->has_competences()) $progress++;
+		if($this->has_bio()) $progress++;
+
+		return $progress;
+	}
+
 	public function has_suggestion()
 	{
 		return $this->suggestion()->exists();
@@ -153,6 +166,9 @@ class User extends DataMapper {
 
 	public function is_complete_answers()
 	{
+		if($this->group_id == null)
+			return false;
+
 		$questions_count = $this->group()->questions()->get()->result_count();
 		$answered_count = count($this->answered_questions());
 

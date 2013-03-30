@@ -7,18 +7,18 @@
 
 <table class="table">
 	<tr>
+		<th>#</th>
 		<th>NIM</th>
 		<th>Nama Lengkap</th>
-		<th>Tanggal Registrasi</th>
-		<th>Form 1</th>
-		<th>Form 2</th>
-		<th>Form 3</th>
-		<th>Form 4</th>
-		<th>Form 5</th>
+		<th>Status Registrasi</th>
+		<th>Kelengkapan Form</th>
 		<th></th>
+		<th></th>	
 	</tr>
+{% set c = 1 %}
 {% for user in users %}
 	
+	{% set percent = user.progress() / 5 * 100 %}
 	{% if user.verified == 0 %}
 		{% set class = 'error' %}
 	{% else %}
@@ -26,27 +26,34 @@
 	{% endif %}
 
 	<tr class="{{ class }}">
-
-		<td> {{ user.username }} </td> 
+		<td> {{ c }} </td>
+		<td> {{ user.username }} </td>
 		<td> {{ anchor(user.admin_url(), user.name) }} </td>
-		<td> {{ user.created_at }} </td>
-		<td> {{ user.has_bio()|yesno}} </td>
-		<td> {{ user.is_complete_answers()|yesno}} </td>
-		<td> {{ user.has_competences()|yesno}} </td>
-		<td> {{ user.has_suggestion()|yesno}} </td>
-		<td> {{ user.has_recommendations()|yesno}} </td>
-		
-		<td>
-			{{ anchor(user.admin_url(), 'Lihat Profil &raquo;', 'class="btn btn-primary btn-mini"') }}
+		<td> <small> {{ user.created_at }} </small> </td>
 
+		<td>
+			{% set bar_class = percent == 100 ? 'success' : 'warning' %}
+			{% set check_mark = percent == 100 ? '&check;' : '' %}
+			<div class="progress">
+				<div class="bar bar-{{ bar_class }}" style="width: {{ percent }}%">{{ check_mark ~ ' ' ~ percent }}%</div>
+			</div>
+		</td>
+		<td>
 			{% if not user.verified %}
 
+			<div class="btn-group">
 			{{ anchor('admin/users/approve/' ~ user.id, '&check; Approve', 'class="btn btn-mini btn-success"') }}
-			{{ anchor('admin/users/delete/' ~ user.id, '&cross; Delete User', 'class="btn btn-mini btn-danger"') }}
+			{{ anchor('admin/users/delete/' ~ user.id, '&cross; Delete User', 'class="btn btn-mini btn-danger delete"') }}
+			</div>
 
 			{% endif %}
 		</td>
+
+		<td>
+			{{ anchor(user.admin_url(), 'Lihat Profil &raquo;', 'class="btn btn-primary btn-mini"') }}
+		</td>
 	</tr>
+	{% set c = c + 1 %}
 {% endfor %}
 </table>
 

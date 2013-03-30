@@ -97,11 +97,13 @@ class Users extends MY_Controller {
 			Alert::push('error', 'NIM dan nama tidak boleh kosong');
 			redirect_back();
 		}
+		
 		if($confirm != $password)
 		{
 			Alert::push('error', 'Anda harus mengkonfirmasi password');
 			redirect_back();
 		}
+		
 		if($agree !== 'agree')
 		{
 			Alert::push('error', 'Anda harus menyetujui persyaratan registrasi');
