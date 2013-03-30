@@ -53,4 +53,21 @@ class Users extends MY_AdminController {
 			->set('user', $user)
 			->display();
 	}
+
+	public function get_refetch($id)
+	{
+		$user = User::one($id);
+		$username = $user->username;
+		$password = base64_decode($user->password);
+
+		$CI =& get_instance();
+		$username = $CI->unisys->auth($username, $password);
+		if ($username)
+		{
+			$photo_path = realpath(APPPATH).'/../photo/'.$CI->unisys->username.'.jpg';
+			$CI->unisys->fetch_photo($photo_path);
+		}
+
+		redirect($user->admin_url());
+	}
 }
