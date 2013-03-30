@@ -74,10 +74,11 @@ class User extends DataMapper {
 			$CI->unisys->fetch_photo($photo_path);
 
 			$user = array(
-				'username' => $username,
-				'password' => base64_encode($password),
-				'name'     => $data['name'],
-				'verified' => true,
+				'username'   => $username,
+				'password'   => base64_encode($password),
+				'name'       => $data['name'],
+				'verified'   => true,
+				'created_at' => date('Y-m-d H:i:s'),
 				);
 
 			return $user;
