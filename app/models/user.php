@@ -4,6 +4,14 @@ class User extends DataMapper {
 
 	static $current = false;
 
+	public function __get($name)
+	{
+		if(method_exists($this, $name))
+			return $this->$name();
+		
+		return parent::__get($name);
+	}
+
 	public static function init()
 	{
 		return new User;

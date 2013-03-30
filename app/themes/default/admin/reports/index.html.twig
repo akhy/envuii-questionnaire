@@ -1,0 +1,84 @@
+{% extends _layout %}
+
+{% block content %}
+	
+	<h3> Reports </h3>
+
+	<h4>Statistik Alumni</h4>
+
+	{% set user_count = users.count() %}
+	{% set listed_count = 0 %}
+
+	<table class="tbl">
+	{% for group in groups %}
+	<tr>
+		{% set cnt = group.users().count() %}
+		<td>
+		{{ group.description }}
+		</td>
+		<td>
+			{{ cnt }} orang
+		</td>
+		<td>
+			{{ cnt / user_count * 100 }} %
+		</td>
+		{% set listed_count = listed_count + cnt %}
+	</tr>
+	{% endfor %}
+	</table>
+	
+	<ul>
+		<li>
+			Total Alumni Terdaftar: 
+			<strong>{{ anchor('admin/users', user_count ~ ' orang') }}</strong>
+		</li>
+		<li>
+			Belum Mengisi Form: 
+			<strong>{{ anchor('admin/users', (user_count - listed_count) ~ ' orang') }}</strong>
+		</li>
+	</ul>
+
+
+	{# QUESTIONS #}
+	<hr>
+	<h4>Hasil Tracer Study</h4>
+
+	{% for report in reports %}
+
+		{% set question = report.question %}
+		{% set group_usercount = question.group().users().count() %}
+		
+		<h5>{{ anchor(question.admin_url(), report.description) }}</h5>
+
+		{% if question.meta_table == 'choose' %}
+			<table class="tbl">
+			{% for choice in question.meta().choices() %}
+				{% set cnt = choice.answers().count() %}
+				<tr>
+					<td> {{ choice.text }} </td>
+					<td> {{ cnt }} orang </td> 
+					{% if not question.meta().multi_answers %}
+					<td> {{ cnt / group_usercount * 100 }} % </td> 
+					{% endif %}
+				</tr>
+			{% endfor %}
+			</table>
+			{% if question.meta().multi_answers %}
+				<small>Catatan: Pertanyaan ini mengizinkan lebih dari satu pilihan</small>
+			{% endif %}
+
+		{% elseif question.meta_table == 'fill' %}
+		    <ul>
+		    {% for answer in question.answers_all().limit(5).get() %}
+			    <li> {{ answer.fill }} </li>
+		    {% endfor %}
+		    {% if question.answers_all().count() > 5 %}
+		    <small>
+		    	{{ anchor(question.admin_url(), 'lihat hasil selengkapnya...') }}
+		    </small>
+		    {% endif %}
+		    </ul>	
+
+		{% endif %}
+	{% endfor %}
+{% endblock %}
