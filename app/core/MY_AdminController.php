@@ -11,7 +11,7 @@ class MY_AdminController extends MY_Controller
 		if(! $this->session->userdata('is_admin'))
 		{
 			Alert::push('error', 'Silakan login ke dalam sistem untuk mengakses halaman admin.');
-			redirect('admin/auth');
+			redirect('admin/auth/login');
 		}
 
 		$this->load->helper('text');

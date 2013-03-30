@@ -22,6 +22,7 @@ class Users extends MY_Controller {
 		
 		$this->view('users/register_manual')
 			->prepend('Manual Registration')
+			->set('intended_username', $this->session->flashdata('intended_username'))
 			->display();
 	}
 
@@ -73,6 +74,8 @@ class Users extends MY_Controller {
 				 Jika anda masih tidak dapat login,
 				 silakan gunakan form registrasi manual di bawah.');
 
+			$this->session->set_flashdata('intended_username', $username);
+
 			redirect('users/register_manual');	
 		}
 
@@ -113,12 +116,10 @@ class Users extends MY_Controller {
 			'created_at' => date('Y-m-d H:i:s'),
 			));
 
-		Alert::push('success',
-			'Registrasi berhasil, silakan login 
-			 dengan username dan password yang baru anda buat.'
-			);
+		User::login($username);
+		Alert::push('success', 'Registrasi berhasil.');
 
-		redirect('users/login');
+		redirect('bio/edit');
 	}
 
 	public function post_test()

@@ -31,6 +31,11 @@ class User extends DataMapper {
 		return $user->exists() ? $user : null;
 	}
 
+	public static function login($username)
+	{
+		get_instance()->session->set_userdata('username', $username);
+	}
+
 	public static function auth($username, $password)
 	{
 		$CI =& get_instance();
@@ -42,7 +47,7 @@ class User extends DataMapper {
 
 		if ($user->exists())
 		{
-			$CI->session->set_userdata('username', $username);
+			User::login($username);
 			return $user;
 		}
 
